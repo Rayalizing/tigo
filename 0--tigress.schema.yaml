@@ -1,0 +1,54 @@
+# Rime schema
+# encoding: utf-8
+#
+
+schema:
+  name: "Tigress-Ray"
+  description: |
+    虎码官方词库(原版+自定义)
+  dependencies:
+  - core2022  #自定义字集工具方案
+  - PY_c  # 拼音方案
+  - easy_english # 英文
+  schema_id: 0--tigress
+  author:
+    - {}
+  version: 0.9
+
+__include: tiger_pack/tigress.schema:/  # 继承tigress的大部分方案配置
+
+__patch:
+######自定义区######
+  translator/dictionary/=: 0--tigress   # 挂载词库 0--tigress.dict.yaml
+  speller/algebra: # 将自定义一简后的词典重新派生出原有编码。
+    - derive/q;/qo
+    - derive/w;/wo
+    - derive/e;/ey
+    - derive/r;/rl
+    - derive/t;/tu
+    - derive/y;/yp
+    - derive/u;/un
+    - derive/i;/is
+    - derive/o;/ot
+    - derive/p;/px
+    - derive/a;/ah
+    - derive/s;/sh
+    - derive/d;/dg
+    - derive/f;/fi
+    - derive/g;/gy
+    - derive/h;/ho
+    - derive/j;/jr
+    - derive/k;/kv
+    - derive/l;/le
+    - derive/z;/zk
+    - derive/x;/xd
+    - derive/c;/cb
+    - derive/v;/vb
+    - derive/b;/bd
+    - derive/n;/ng
+    - derive/m;/md
+  speller/auto_select_pattern: ^;\w+|^[\w;]{4}$  # 增加四码上屏功能
+  punctuator:  # 挂载我的符号文件
+    __include: 0--core/rays_symbols:/punctuator
+  
+  skey_binder/bindings/@0/=: { when: has_menu, accept: apostrophe, send: 2 }  # # 将原版的分号二选改为单引号二选

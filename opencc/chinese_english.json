@@ -1,0 +1,27 @@
+{
+	"name": "Chinese to English",
+	"segmentation": {
+		"type": "mmseg",
+		"dict": {
+			"type": "ocd2",
+			"file": "chinese_english.ocd2"
+		}
+	},
+	"conversion_chain": [
+		{
+			"dict": {
+				"type": "group",
+				"dicts": [
+					{
+						"type": "ocd2",
+						"file": "chinese_english.ocd2"
+					},
+					{
+						"type": "ocd2",
+						"file": "english_chinese.ocd2"
+					}
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,85 @@
+# Rime schema
+# encoding: utf-8
+#
+schema:
+  schema_id: 0--tigo
+  name: Tigo·万象
+  version: "2025-01-01"
+  author:
+    - amzxyz
+    - rayalizing
+  description: |
+    虎码整句，基于万象词库的方案
+  dependencies:
+    - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
+    - radical_pinyin  # 反查：部件拆字，反查及辅码
+    - stroke          #反查：笔画组字
+    - charset         #字符集过滤器
+    - 0--tigress      #虎码简词
+
+__include: wanxiang.schema:/  # 继承万象的大部分方案配置
+
+
+######自定义区######
+__patch:
+  translator/dictionary/=: 0--tigo  # 挂载词库 0--tigo.dict.yaml
+  user_dict_set/dictionary/=: 0--tigo  
+  add_user_dict/dictionary/=: 0--tigo    # 自定义词典加词(ac引导)
+  chengyu: # 取消成语的拼音简码
+
+  pro_comment_format:   # 超级注释模块 修改辅助码提示为虎码简码
+    candidate_length: 1
+    fuzhu_type: jdh    # 这里选用jdh,是因为虎码简码占的就是简单鹤(jdh)的位置
+    corrector_type: "{comment}"
+
+  punctuator:
+    digit_separators: ":,."  #数字分隔符
+    __include: 0--core/rays_symbols:/punctuator    # 挂载我的符号文件
+
+  key_binder/bindings/@1/=: { when: has_menu, accept: apostrophe, send: 2 }  # 将原版的分号二选改为单引号二选
+      # 列表项的起始数为0，所以这里@1表示列表中的第二个元素
+
+# 拼写运算(本方案的核心)
+  speller:
+    auto_select: true
+    alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA`/;[
+    initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA;
+    # delimiter: " '"  # 第一位<空格>是拼音之间的分隔符；第二位<'>表示可以手动输入单引号来分割拼音。
+    algebra:
+
+    # 提取虎码的简码和全码（格式示例：u_unid）
+      - xform|^.*?;.*?;.*?;.*?;(.+?);(.+?);.*$|$1_$2| #这里将;换成了_,避免了后续操作对我所有自定义词典的影响
+
+    # 以下均须操作第二组【全码】：
+      - derive|^.+?_([a-z]{2}).*$|$1| # 纯双拼的情况（这里指所有的前两码）
+      - abbrev|^.+?_([a-z]{2})([a-z]{2}).*$|$1$2| # 双拼+2位辅助码的情况，abbrev类型不可以整句内输入2位辅助码，必须加/
+      - derive|^.+?_([a-z]{2})([a-z]{2}).*$|$1$2/| # 整句模式下，输入4码加/出单字,增强单字性能（相当于4码全码的字，全码后加/）
+
+    # 3码【全码】的字，【全码】后加[ , 增强单字性能
+      - derive|^.+?_([a-z]{3})$|$1[|
+
+    # 3码【简码】的字，【简码】后加[ , 增强单字性能
+      - derive|^([a-z]{3})_.*$|$1|  # 这一步目的：不加[也能出候选。
+      - derive|^([a-z]{3})_.*$|$1[|
+
+    # # 2码全码的字，全码后加/  (2码全码也就是简码为1码,重复了,注释掉)
+    #   - derive|^.+?_([a-z]{2})$|$1/|
+
+    # 2码【简码】的字，【简码】后加/ , 增强单字性能
+      - derive|^([a-z]{2})_.*$|$1|  # 这一步目的：不加/也能出候选。
+      - derive|^([a-z]{2})_.*$|$1/|
+
+    # 1码【简码】的字，【简码】后加; , 增强单字性能
+      - derive|^([a-z])_.*$|$1|
+      - derive|^([a-z])_.*$|$1;|
+
+
+  # # 简码词库导入
+  # engine/translators/+: table_translator@0--tigress
+  # 0--tigress:  # 虎词
+  #   dictionary: 0--tigress     # 挂载词库 0--tigress.dict.yaml
+  #   enable_sentence: true   # 禁止造句
+  #   enable_user_dict: false  # 禁用用户词典，是否开启自动调频
+  #   initial_quality: 9999       # 初始权重
+  #   comment_format:          # 自定义提示码
+  #     - xform/.*//           # 清空提示码

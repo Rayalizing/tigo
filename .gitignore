@@ -1,0 +1,15 @@
+# 忽略所有文件
+/*
+# 排除需要同步的文件
+!.gitignore
+!/0--core
+!/并击研究
+!/lua
+!/opencc
+!/scripts
+!0--*
+!*ray*
+!wanxiang.custom.yaml
+
+# 忽略个人文件
+*personal*

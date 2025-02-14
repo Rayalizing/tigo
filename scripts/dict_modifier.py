@@ -1,9 +1,9 @@
 # 本脚本用于将一码单字在词中的编码部分替换为一码+;的形式
-# 考虑了不同的情况(完美适配了tgiress_ci.dict.yaml)
+# 考虑了不同的情况(完美适配了tigress_ci.dict.yaml)
 # 使用方式：
-# 1. 将待处理的词库文件复制到想要的{file_path}路径下
+# 1. 在脚本中，修改read_file_list为需要处理的文件列表，write_file_path为想要输出的字典路径
 # 2. 运行脚本
-# 3. 处理完成后，记得将涉及到该字典的方案，dict.yaml中的路径替换为{file_path}路径。
+# 3. 处理完成后，记得将涉及到该字典的方案，在xxx.dict.yaml中的路径替换为 write_file_path 路径.
 # =========================
 import re
 from pathlib import Path

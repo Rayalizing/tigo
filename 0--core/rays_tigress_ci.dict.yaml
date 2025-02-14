@@ -1,4 +1,4 @@
-name: 0--rays_tigress_ci
+name: rays_tigress_ci
 version: "2025.02.08"
 sort: by_weight
 use_preset_vocabulary: false

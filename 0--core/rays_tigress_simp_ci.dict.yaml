@@ -1,0 +1,108 @@
+name: rays_tigress_simp_ci
+version: "2025.02.08"
+sort: by_weight
+use_preset_vocabulary: false
+columns:
+  - text
+  - weight
+  - code
+  - stem
+encoder:
+  rules:
+    - length_equal: 2
+      formula: "AaAbBaBb"
+    - length_equal: 3
+      formula: "AaBaCaCb"
+    - length_in_range: [4, 99]
+      formula: "AaBaCaZa"
+
+...
+那个	5000	a
+如果	5000	b
+不是	5000	c
+哪个	5000	d
+突然	5000	e
+开始	5000	f
+地方	5000	g
+孩子	5000	h
+为什么	5000	i
+什么	5000	j
+没有	5000	k
+而且	5000	l
+所以	5000	m
+现在	5000	n
+自己	5000	o
+起来	5000	p
+特别	5000	q
+因为	5000	r
+出来	5000	s
+我们	5000	t
+工作	5000	u
+这个	5000	v
+怎么	5000	w
+应该	5000	x
+当然	5000	y
+可以	5000	z
+静静	485	aa
+妈妈	485	bb
+燃烧	485	cc
+哈哈	485	dd
+想想	485	ee
+天天	485	ff
+垃圾	485	gg
+慢慢	485	hh
+继续	485	ii
+价值	485	jj
+渐渐	485	kk
+葡萄	485	ll
+刚刚	485	mm
+左右	485	nn
+尴尬	485	oo
+默默	485	pp
+眼睛	485	qq
+等等	485	rr
+谢谢	485	ss
+隐隐	485	tt
+看看	485	uu
+气氛	485	vv
+往往	485	ww
+种种	485	xx
+叔叔	485	yy
+哥哥	485	zz
+适当	485	ay
+好像	485	bj
+不想	485	ce
+不能	485	ck
+不同	485	cm
+还有	485	cn
+不错	485	cz
+吃饭	485	dq
+虽然	485	dv
+本身	485	ez
+一般	485	fi
+一个	485	fj
+一切	485	fr
+一种	485	fx
+与其	485	fz
+增强	485	gb
+经常	485	is
+达到	485	my
+有点	485	ny
+路上	485	py
+睡觉	485	qk
+特点	485	qy
+考虑	485	qz
+对面	485	rb
+对方	485	rl
+对错	485	rz
+以来	485	va
+这里	485	vd
+这样	485	ve
+这么	485	vt
+意思	485	xq
+解决	485	xw
+小米	485	yp
+可能	485	zk
+可行	485	zp
+其实	485	zw
+甚至	485	zy

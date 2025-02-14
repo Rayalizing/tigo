@@ -21,7 +21,7 @@ patch:
       - stroke          #反查：笔画组字
       - charset         #字符集过滤器
 
-  translator/dictionary/=: wanxiang_ray    # 挂载词库 wanxiang_ray.dict.yaml
+  translator/dictionary/=: wanxiang.extended    # 挂载词库 wanxiang.extended.dict.yaml
   punctuator:
     digit_separators: ":,."  #数字分隔符
     __include: 0--core/rays_symbols:/punctuator    # 挂载我的符号文件

@@ -18,7 +18,7 @@ schema:
     - 0--tigress      #虎码简词
 
 __include: wanxiang.schema:/  # 继承万象的大部分方案配置
-
+chengyu/user_dict/=: ""  # 成语词典改为空，不使用
 
 ######自定义区######
 __patch:

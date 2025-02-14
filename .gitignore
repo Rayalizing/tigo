@@ -2,14 +2,47 @@
 /*
 # 排除需要同步的文件
 !.gitignore
+!default.custom.yaml
 !/0--core
 !/并击研究
-!/lua
-!/opencc
+# !/lua  # 如果某些文件已经被 Git 跟踪，即使它们在 .gitignore 文件中被排除，Git 仍然会跟踪它们。记得使用 git rm -r --cached opencc 移除这些文件。
+# !/opencc  
 !/scripts
 !0--*
 !*ray*
 !wanxiang.custom.yaml
+!wanxiang.extended.dict.yaml
 
-# 忽略个人文件
+# =============== 其他必须忽略的文件：=================
+# 我的个人配置
 *personal*
+user_tg.custom.dict.txt
+
+# Project exclude paths
+/venv/
+.DS_Store
+
+# 字典文件(大文件, 不提交)
+*.gram
+
+# IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+
+# Weasel编译的文件(实际读取的配置)
+build/
+sync/
+# 生成的用户设置(中英文状态, 简繁体状态, emoji开关状态等)
+/user.yaml
+# 自动生成的Weasel版本信息等(没啥用)
+/installation.yaml
+
+# 用户词库(自动调频, 生成的文件)
+*.userdb/
+
+*.zip

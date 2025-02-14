@@ -51,4 +51,6 @@ __patch:
   punctuator:  # 挂载我的符号文件
     __include: 0--core/rays_symbols:/punctuator
   
-  skey_binder/bindings/@0/=: { when: has_menu, accept: apostrophe, send: 2 }  # # 将原版的分号二选改为单引号二选
+  key_binder/bindings/@0/=: { when: has_menu, accept: apostrophe, send: 2 }  # # 将原版的分号二选改为单引号二选
+  key_binder/bindings/@1/=: { when: has_menu, accept: slash, send: 3 }  # 将原版的单引号二选改为分号二选
+  

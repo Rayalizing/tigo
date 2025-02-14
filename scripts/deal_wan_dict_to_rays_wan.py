@@ -367,7 +367,7 @@ print(dict_data['hm']['装'])
 for file_name in file_list:
     # File paths
     yaml_file_path = Path('cn_dicts', file_name)
-    write_file_path = Path('scripts', 'resources', 'cn_dicts_new', file_name)
+    write_file_path = Path('cn_dicts_ray', file_name)
 
     print("正在处理：", yaml_file_path)
     # Update missing encodings in the file

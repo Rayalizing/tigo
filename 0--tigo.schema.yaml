@@ -13,19 +13,21 @@ schema:
   dependencies:
     - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
     - radical_pinyin  # 反查：部件拆字，反查及辅码
-    - stroke          #反查：笔画组字
+    # - stroke          #反查：笔画组字
     - charset         #字符集过滤器
     - 0--tigress      #虎码简词
 
 __include: wanxiang.schema:/  # 继承万象的大部分方案配置
-chengyu/user_dict/=: ""  # 成语词典改为空，不使用
 
 ######自定义区######
 __patch:
   translator/dictionary/=: 0--tigo  # 挂载词库 0--tigo.dict.yaml
   user_dict_set/dictionary/=: 0--tigo  
   add_user_dict/dictionary/=: 0--tigo    # 自定义词典加词(ac引导)
-  chengyu: # 取消成语的拼音简码
+
+  # 取消成语的拼音简码,改为rays自定义短语
+  chengyu/user_dict/=: 0--core/rays_custom_phrase
+  chengyu/initial_quality/=: 99
 
   pro_comment_format:   # 超级注释模块 修改辅助码提示为虎码简码
     candidate_length: 1

@@ -8,12 +8,18 @@
 # !/lua  # 如果某些文件已经被 Git 跟踪，即使它们在 .gitignore 文件中被排除，Git 仍然会跟踪它们。记得使用 git rm -r --cached opencc 移除这些文件。
 # !/opencc  
 !/scripts
+
+# 仅保留opencc目录下的emoji.txt
+!/opencc
+/opencc/*
+!/opencc/emoji.txt
+
 !/cn_dicts_ray
 /cn_dicts_ray/*.dict*
 !0--*
 !*ray*
 !wanxiang.custom.yaml
-!wanxiang.extended.dict.yaml
+!wanxiang.dict.yaml
 
 # =============== 其他必须忽略的文件：=================
 # 我的个人配置

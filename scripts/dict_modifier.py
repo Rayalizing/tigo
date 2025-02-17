@@ -27,9 +27,6 @@ pattern_3 = r"(^[^\t][^\t]{key}\t[0-9]+\t[a-z][a-z]){value}($)"
 # 或者: pattern_3 = r"^([^\t]{{2}}{key}\t[0-9]+\t[a-z][a-z]){value}$"  # 修正了 {2} 在python中可能会被格式化的问题.
 
 
-read_file_list = [Path("tiger_pack", "tigress_ci.dict.yaml"), ]
-write_file_path = Path('0--core', 'rays_tigress_ci.dict.yaml')
-
 # 读取文件内容
 def read_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -71,6 +68,10 @@ def replace_in_file(read_file_list, write_file_path, characters):
     
     # 写入新文件
     write_file(write_file_path, all_lines)
+
+
+read_file_list = [Path("tiger_pack", "tigress_ci.dict.yaml"), ]
+write_file_path = Path('0--core', 'rays_tigress_ci.dict.yaml')
 
 # 调用替换函数
 replace_in_file(read_file_list, write_file_path, characters)

@@ -2,7 +2,6 @@
 /*
 # 排除需要同步的文件
 !.gitignore
-!default.custom.yaml
 !/0--core
 !/并击研究
 # !/lua  # 如果某些文件已经被 Git 跟踪，即使它们在 .gitignore 文件中被排除，Git 仍然会跟踪它们。记得使用 git rm -r --cached opencc 移除这些文件。
@@ -18,8 +17,11 @@
 /cn_dicts_ray/*.dict*
 !0--*
 !*ray*
+!default.custom.yaml
+!PY_c.schema.yaml
 !wanxiang.custom.yaml
 !wanxiang.dict.yaml
+!custom_phrase.txt
 
 # =============== 其他必须忽略的文件：=================
 # 我的个人配置

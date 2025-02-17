@@ -127,18 +127,19 @@ def get_simp4_aux_code_map(file_list):
                     character = params[0]
                     encoding = params[1]
                     if "'" not in encoding:
-                        encoding_pre = encoding[:2]
-                        encoding_post = encoding[2:]
+                        # encoding_pre = encoding[:2]
+                        # encoding_post = encoding[2:]
 
-                        encoding_pre = encoding_pre.ljust(2, '0')  # 调用 ljust（左对齐）方法，指定最终宽度为 2，向右填充字符为 '0'。
-                        encoding_post = encoding_post.ljust(2, '0')
-                        encodingfull = encoding_pre + '_' + encoding_post
+                        # encoding_pre = encoding_pre.ljust(2, '0')  # 调用 ljust（左对齐）方法，指定最终宽度为 2，向右填充字符为 '0'。
+                        # encoding_post = encoding_post.ljust(2, '0')
+                        # encoding = encoding_pre + '_' + encoding_post
 
                         if character not in dict_data:
-                            dict_data[character] = [encodingfull]
-                        # else:   # 注释掉这部分，则会只保留第一组的编码（一般是简码），后续的编码（一般属于非简码和容错码）会被忽略。
-                        #     if encodingfull not in dict_data[character]:
-                        #         dict_data[character].append(encodingfull)
+                            # dict_data[character] = [encodingfull]
+                            dict_data[character] = [encoding]
+                        else:   # 注释掉这部分，则会只保留第一组的编码（一般是简码），后续的编码（一般属于非简码和容错码）会被忽略。
+                            if len(encoding) < len(dict_data[character][0]):
+                                dict_data[character] = [encoding]  # 如果新编码的长度小于已存在的编码，则替换(只取最简的码)
     return dict_data
 
 def get_hu_full4_aux_code_map(file_list):
@@ -161,15 +162,15 @@ def get_hu_full4_aux_code_map(file_list):
                     chaifen = encodeings[0]
                     all_code = encodeings[1]
                     pure_all_code = all_code.split('&nbsp;')[0]
-                    pure_all_code = pure_all_code.ljust(4, '0')  # 调用 ljust（左对齐）方法，指定最终宽度为 4，向右填充字符为 '0'。
-                    # 将前两码和后两码之间用_隔开：
-                    pure_all_code = pure_all_code[:2] + '_' + pure_all_code[2:]
+                    # pure_all_code = pure_all_code.ljust(4, '0')  # 调用 ljust（左对齐）方法，指定最终宽度为 4，向右填充字符为 '0'。
+                    # # 将前两码和后两码之间用_隔开：
+                    # pure_all_code = pure_all_code[:2] + '_' + pure_all_code[2:]
       
                     if character not in dict_data:
                         dict_data[character] = [pure_all_code]
-                    else:
-                        if pure_all_code not in dict_data[character]:
-                            dict_data[character].append(pure_all_code)
+                    # else:
+                    #     if pure_all_code not in dict_data[character]:
+                    #         dict_data[character].append(pure_all_code)
     return dict_data
 
 def get_pre2_aux_code_map(file_list):
@@ -292,7 +293,7 @@ def update_missing_encodings(file_path, write_file_path, dict_data):
                 if character_encoding_pre not in value:
                     encoding_post_list += ';'
                     continue
-                    
+
                 encoding_post_list += ','.join(value.get(character_encoding_pre))
                 encoding_post_list += ';'
 

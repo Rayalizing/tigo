@@ -32,9 +32,13 @@ patch:
     candidate_length: 1         # 候选词辅助码提醒的生效长度，0为关闭  但同时清空其它，应当使用上面开关来处理    
     fuzhu_type: tiger             # 用于匹配对应的辅助码注释显示，基于默认词典的可选注释类型有：( moqi, flypy, zrm, jdh, cj, tiger, wubi, hanxin) tone (这个参数特殊，在注释里显示声调，不算辅助码，也填入此处)选择一个填入，之所以单独列出是因为这里有更多的可配置性，而真正的辅助码默认只有8种
     corrector_type: "{comment}"  # 换一种显示类型，比如"({comment})" 
+
+  key_binder/bindings/@1/=: { when: has_menu, accept: apostrophe, send: 2 }  # 修改分号二选为单引号二选
+  key_binder/bindings/@next/+: { when: has_menu, accept: slash, send: 3 }  # 增加斜杠三选
+
   
   # 拼写运算 (决定本方案的拼音、辅助码输入方式)：
-  speller/alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA`/;
+  speller/alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA`[;
   speller/initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA;
   speller/algebra:
    # 全拼输入
@@ -46,14 +50,14 @@ patch:
     - xform|^(.*?);.*?;.*?;.*?;.*?;.*?;(.*?);.*$|$1;$2|
     - derive|^(.+);.*$|$1| # 纯双拼的情况
     - abbrev|^(.+);(\w)(\w).*$|$1$2| # 双拼+一位辅助码的情况
-    - derive|^(.+);(\w)(\w).*$|$1[$2| # 双拼+[一位辅助码的情况
+    # - derive|^(.+);(\w)(\w).*$|$1[$2| # 双拼+[一位辅助码的情况
     - abbrev|^(.+);(\w)(\w).*$|$1$2$3| # 双拼+2位辅助码的情况
-    - derive|^(.+);(\w)(\w).*$|$1$2$3/| # 双拼+2位辅助码+/
+    - derive|^(.+);(\w)(\w).*$|$1$2$3[| # 双拼+2位辅助码+[
     - derive|^(.+);(\w)(\w).*$|$1$2$3o| # 双拼+2位辅助码+o
     #分号后面的第二组辅助码
     - abbrev/^(.+);.*?,(\w)(\w).*$/$1$2/
-    - derive/^(.+);.*?,(\w)(\w).*$/$1[$2/
+    # - derive/^(.+);.*?,(\w)(\w).*$/$1[$2/
     - abbrev/^(.+);.*?,(\w)(\w).*$/$1$2$3/
-    - derive|^(.+);.*?,(\w)(\w).*$|$1$2$3/|
+    - derive|^(.+);.*?,(\w)(\w).*$|$1$2$3[|
     - derive/^(.+);.*?,(\w)(\w).*$/$1$2$3o/
     - erase/^(.+);(.+)$/    # 删除原始编码加速检索

@@ -24,5 +24,7 @@ import_tables:
 #  - cn_dicts_ray/people         #人名
 #  - cn_dicts_ray/place          #地名
 
-  - 0--core/rays_personal_for_wan
+  # 我的自定义词库:
+  - 0--core/rays_kf  # 快符
+  - 0--core/rays_personal_for_wan  # 个人词库
 ...

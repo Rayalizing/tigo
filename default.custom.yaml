@@ -6,18 +6,16 @@
 #   rime_version: 1.7.3
 patch:
   schema_list:
-    - schema: 0--tigress
-    # - schema: easy_english
-    # - schema: PY_c
-    - schema: wanxiang
     - schema: 0--tigo
-
+    - schema: 0--tigress
+    - schema: 0--tiger
+    - schema: wanxiang
 
   "switcher/hotkeys":  # 将默认的 F4热键 更改为ctrl+`
     - "Control+grave"
     - "Control+F8"
-    # - "F4" 
-    # 如果想用F4来切换，把上一行，行首的#删去
+    - "F4" 
+    
 #左Shift键输入字符直接切换为英文上屏，输入状态变为英文。
   ascii_composer/good_old_caps_lock: true
   ascii_composer/switch_key:

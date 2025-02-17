@@ -3,7 +3,7 @@
 #
 
 schema:
-  name: "Tigress-Ray"
+  name: "Tigress·官方"
   description: |
     虎码官方词库(原版+自定义)
   dependencies:

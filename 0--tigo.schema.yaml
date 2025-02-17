@@ -25,11 +25,6 @@ __patch:
   user_dict_set/dictionary/=: 0--tigo  
   add_user_dict/dictionary/=: 0--tigo    # 自定义词典加词(ac引导)
 
-  # # 取消成语的拼音简码,改为rays自定义短语
-  # chengyu/user_dict/=: 0--core/rays_custom_phrase
-  # 自定义短语
-  # custom_phrase/enable_completion/=: true # 补全提示  
-
   pro_comment_format:   # 超级注释模块 修改辅助码提示为虎码简码
     candidate_length: 1
     fuzhu_type: jdh    # 这里选用jdh,是因为虎码简码占的就是简单鹤(jdh)的位置
@@ -54,36 +49,29 @@ __patch:
 
     # 以下均须操作第二组【全码】：
       - derive|^.+?_([a-z]{2}).*$|$1| # 纯双拼的情况（这里指所有的前两码）
-      - abbrev|^.+?_([a-z]{4})$|$1| # 双拼+2位辅助码的情况（即4码字），abbrev类型不可以整句内输入2位辅助码，必须加[
-      # - derive|^.+?_([a-z]{4})$|$1|
-      - derive|^.+?_([a-z]{4})$|$1[| # 整句模式下，输入4码加[出单字,增强单字性能（相当于4码全码的字，在整句中全码后加[）
-
-    # # 3码【简码】且2码【全码】的字, 全码后加[, 增强单字性能（这里特指类似兔：wtt、虎：zhh的字根字）
-    #   - derive|^[a-z]{3}_([a-z]{2})$|$1[|
+      - abbrev|^.+?_([a-z]{4})$|$1| # abbrev类型不可以整句内输入2位辅助码，必须加[
+      - derive|^.+?_([a-z]{4})$|$1[| # 输入4码加[出单字,增强单字性能
 
     # 3码【简码】的字，【简码】后加[, 增强单字性能
-      # - derive|^([a-z]{3})_.*$|$1|  # 这一步目的：不加[也能出候选。
       - abbrev|^([a-z]{3})_.*$|$1|
       - derive|^([a-z]{3})_.*$|$1[|
 
-    # # 2码全码的字，全码后加[  (2码全码也就是简码为1码,重复了,注释掉)
-    #   - derive|^.+?_([a-z]{2})$|$1[|
-
     # 2码【简码】的字，【简码】后加[ , 增强单字性能
-      # - derive|^([a-z]{2})_.*$|$1\x5B|
       - derive|^([a-z]{2})_.*$|$1[|
 
     # 1码【简码】的字，【简码】后加; , 增强单字性能
       - derive|^([a-z])_.*$|$1|
       - derive|^([a-z])_.*$|$1;|
 
+    # 删除原始编码以加速检索
+      - erase/^(.+)_(.+)$/    
 
-  # # 简码词库导入
-  # engine/translators/+: table_translator@0--tigress
-  # 0--tigress:  # 虎词
-  #   dictionary: 0--tigress     # 挂载词库 0--tigress.dict.yaml
-  #   enable_sentence: true   # 禁止造句
-  #   enable_user_dict: false  # 禁用用户词典，是否开启自动调频
-  #   initial_quality: 9999       # 初始权重
-  #   comment_format:          # 自定义提示码
-  #     - xform/.*//           # 清空提示码
+  # 虎词库导入, 实现前四码的首选为虎词
+  # （同时取消万象原方案中成语的拼音简码，一箭双雕）
+  chengyu:
+    dictionary: 0--tigress     # 挂载词库 0--tigress.dict.yaml
+    enable_sentence: false   # 禁止造句
+    enable_user_dict: false  # 禁用用户词典，是否开启自动调频
+    initial_quality: 9999999       # 初始权重（足够大，保证前四码的首选为虎词）
+    comment_format:          # 自定义提示码
+      - xform/.*//           # 清空提示码

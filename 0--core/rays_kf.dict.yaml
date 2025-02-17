@@ -1,0 +1,74 @@
+# Rime dictionary
+# encoding: utf-8
+
+---
+name: rays_personal
+version: "2024-11-20"
+sort: by_weight
+columns:
+  - text
+  - code
+  - weight
+  - stem
+...
+#----------  快符  ----------#
+# 快符：用分号引导，可一键上屏的标点
+# 注: '#' 的快符是 '/j' (详见rays_symbols.yaml)
+ ↑ 	;s	20
+ ↓ 	;x	19
+ ↓ 	;xi	20
+ ← 	;z	20
+ → 	;y	20
+
+；	;f	20
+：	;m	20
+·	;d	20
+~	;c	20
+？	;w	20
+！	;t	20
+——	;p	20
+……	;l	20
+
+$	;q	20
+¥	;q	19
+¥	;qr	20
+$	;qm	20
+
+%	;b	20
+@	;a	20
+|	;u	20
+&	;h	20
+^	;j	20
+*	;x	20
+
+（	;k	20
+）	;k	18
+（	;kz	20
+）	;ky	20
+
+【	;z	19
+】	;z	18
+【	;zz	20
+】	;zy	20
+
+{	;d	19
+}	;d	18
+{	;dz	20
+}	;dy	20
+
+《	;s	19
+》	;s	18
+《	;sz	20
+》	;sy	20
+
+<	;j	19
+>	;j	18
+<	;jz	20
+>	;jy	20
+
+“	;n	20
+”	;n	18
+“	;nz	20
+”	;ny	20
+
+#（剩余快符码位：o） 

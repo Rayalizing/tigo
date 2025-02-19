@@ -22,6 +22,7 @@
 !wanxiang.custom.yaml
 !wanxiang.dict.yaml
 !custom_phrase.txt
+!custom_phrase_TM.txt
 
 # =============== 其他必须忽略的文件：=================
 # 我的个人配置

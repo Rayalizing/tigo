@@ -10,6 +10,7 @@ patch:
     - schema: 0--tigress
     - schema: 0--tiger
     - schema: wanxiang
+    - schema: 0--TigoMatrix
 
   "switcher/hotkeys":  # 将默认的 F4热键 更改为ctrl+`
     - "Control+grave"

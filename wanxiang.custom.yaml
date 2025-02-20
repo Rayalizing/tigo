@@ -2,10 +2,6 @@
 # encoding: utf-8
 
 patch:
-
-  menu:
-  page_size: 7  # 候选词个数
-
   # 方案说明
   schema:
     schema_id: wanxiang
@@ -20,6 +16,20 @@ patch:
       - radical_pinyin  # 反查：部件拆字，反查及辅码
       - stroke          #反查：笔画组字
       - charset         #字符集过滤器
+
+  # 增加预测模块（https://github.com/rime/librime-predict）
+  engine/processors/@before 0: predictor
+  engine/translators/@before 0: predict_translator
+  switches/@next/+:
+    name: prediction
+    states: [ 预测关, 预测开 ]
+    reset: 0
+  predictor:
+    db: predict.db
+    max_iterations: 0  # 迭代次数，0为无限次
+    max_candidates: 7  # 候选词个数（建议和menu/page_size的数量一致）
+  
+  menu/page_size: 7  # 候选词个数
 
   # translator/dictionary/=: wanxiang.extended    # 挂载词库 wanxiang.extended.dict.yaml
   punctuator:

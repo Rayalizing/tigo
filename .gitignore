@@ -12,6 +12,10 @@
 !/opencc
 /opencc/*
 !/opencc/emoji.txt
+
+# 保留预测文件（来自https://github.com/rime/librime-predict中的issues）
+!/predict.db
+
 !/cn_dicts_ray
 /cn_dicts_ray/*.dict*
 !/cn_dicts_ray/chars.dict.yaml

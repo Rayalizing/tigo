@@ -36,6 +36,12 @@ __patch:
     comment_format:          # 自定义提示码
       - xform/.*//           # 清空提示码
 
+# 自定义开关(声调显示改为默认关闭)：
+  switches/@6/=:
+    name: tone_display
+    states: [ 调, 声 ]
+    reset: 0
+
 # 自定义超级注释：
   pro_comment_format:   # 超级注释模块 修改辅助码提示为虎码简码
     candidate_length: 1
@@ -85,7 +91,7 @@ __patch:
   switches/@next/+:
     name: chaifen
     reset: 0 
-    states: [ 拆隐, 拆显 ]
+    states: [ 拆, 分 ]
 # 增加自定义开关
   key_binder/bindings/@next/+: { accept: "Control+i", toggle: emoji, when: composing }  # PC emoji开关
   key_binder/bindings/@next/+: { when: composing, accept: '&', toggle: emoji_cn } # 手机 emoji开关
@@ -117,7 +123,7 @@ __patch:
       - derive|^([a-z]{2})_.*$|$1[|
 
       # 1码【简码】的字，【简码】后加; , 增强单字性能
-      - derive|^([a-z])_.*$|$1|  # 这里使用derive, 不加;也可直出
+      - abbrev|^([a-z])_.*$|$1|  # 这里使用abbrev类型，防止单个字母影响整句中三码单字的输入
       - derive|^([a-z])_.*$|$1;|
 
       # 删除原始编码以加速检索

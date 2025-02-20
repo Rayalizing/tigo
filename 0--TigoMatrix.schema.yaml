@@ -54,7 +54,7 @@ __patch:
 
       #- { when: composing, accept: Tab, send: '[' } ## 取消注释后：tab引导辅助码
       - { when: composing, accept: Control+w, send: Control+BackSpace }
-      - { when: has_menu, accept: apostrophe, send: 2 }       #单引号用于次选
+      # - { when: has_menu, accept: apostrophe, send: 2 }       #单引号用于次选
       - { when: has_menu, accept: "Control+e", toggle: chinese_english }      #使用Control+e进入翻译模式
       - { when: has_menu, accept: "Control+m", toggle: moqi_chaifen }      #使用快捷键Control+m/z分别开启和关闭墨奇或自然码辅助码拆分显示
       - { when: has_menu, accept: "Control+z", toggle: zrm_chaifen }
@@ -74,20 +74,22 @@ __patch:
       - {accept: KP_5, send: 5, when: always}    ##  7 zxc    8 vo    9 bnm	        ##  7 prs    8 tuv   9 xyz	
       - {accept: KP_6, send: 6, when: always}    ##      Space		      '    ;      ##      Space		        '   ;
       - {accept: KP_7, send: 1, when: always}    ##  说明：空格首选、分号输入符号、单引号分词；“/”表情输入（+lua）、反引号拼音反查。
-      - {accept: KP_8, send: at, when: always}
-      - {accept: KP_9, send: numbersign, when: always}
-      - {accept: KP_Decimal,  send: 2,     when: always}  # 将小键盘的小数点映射到主键盘的2键 (类似单引号2选)
+      # - {accept: KP_8, send: at, when: always}
+      # - {accept: KP_9, send: numbersign, when: always}
+      - {accept: KP_8, send: 2, when: always}
+      - {accept: KP_9, send: 3, when: always}
+      - {accept: KP_Decimal,  send: grave,     when: always}  # 将小键盘的小数点映射到主键盘的2键 (类似单引号2选)
       - {accept: KP_Enter,    send: semicolon,      when: always}  # 将小键盘的Enter键映射到主键盘的分号
       - {accept: KP_Divide,   send: slash,  when: always}  # 将小键盘的/键映射到主键盘的/键
       - {accept: KP_Multiply, send: asterisk, when: always}  # 将小键盘的*键映射到主键盘的*号
-      - {accept: KP_Add,      send: grave,      when: always}  # 将小键盘的+键映射到主键盘的`键
+      - {accept: KP_Add,      send: apostrophe,      when: always}  # 将小键盘的+键映射到主键盘的`键
       - {accept: KP_Subtract, send: BackSpace,  when: always}  # 将小键盘的-键映射到主键盘的退格
     #####################/将小键盘 0~9 映射到主键盘，对应手机九宫格键盘的输入习惯。#####################
 
 # 拼写运算(本方案的核心)
   speller:
-    alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA1@#456789;`*/
-    initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA1@#456789;
+    alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA123456789;'*/
+    initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA123456789;
     # delimiter: " '"  # 第一位<空格>是拼音之间的分隔符；第二位<'>表示可以手动输入单引号来分割拼音。
     algebra:
 
@@ -228,7 +230,7 @@ __patch:
       # - xform/([a-z][a-z][a-z][a-z])3;/$1`/
       - xform/([a-z][a-z][a-z][a-z])1/$1\x2F/
       - xform/([a-z][a-z][a-z][a-z])2/$1*/
-      - xform/([a-z][a-z][a-z][a-z])3/$1`/  # 经过上述处理，原三码变为四码连续字母+一码符号：([a-z])([a-z])([a-z])([a-z])([*`\x2F])
+      - xform/([a-z][a-z][a-z][a-z])3/$1'/  # 经过上述处理，原三码变为四码连续字母+一码符号：([a-z])([a-z])([a-z])([a-z])([*`\x2F])
       
       ## 对原二码的处理：
       ### 对以'['结尾的二码的处理：
@@ -270,11 +272,11 @@ __patch:
       # - xform/([a-z])3;/$1`/
       - derive/([a-z])1;/$1\x2F/
       - derive/([a-z])2;/$1*/
-      - derive/([a-z])3;/$1`/  # 经过上述处理，原一码变为一码字母+一码符号：([a-z])([*`\x2F])。（符号有分词作用，其后不用跟分隔符）
+      - derive/([a-z])3;/$1'/  # 经过上述处理，原一码变为一码字母+一码符号：([a-z])([*`\x2F])。（符号有分词作用，其后不用跟分隔符）
       # 1码全码的字，双击符号直出:
       - xform/([a-z])1;/$1\x2F\x2F/
       - xform/([a-z])2;/$1**/
-      - xform/([a-z])3;/$1``/  # 经过上述处理，原一码派生出一码字母+两码重复符号：([a-z])([*`\x2F]{2})。（符号有分词作用，其后不用跟分隔符）
+      - xform/([a-z])3;/$1''/  # 经过上述处理，原一码派生出一码字母+两码重复符号：([a-z])([*`\x2F]{2})。（符号有分词作用，其后不用跟分隔符）
       # 1码全码的字，1码直接出候选
       - xform/([a-z])[1-3]/$1/
     ################### /无重码九键方案 ####################
@@ -282,4 +284,4 @@ __patch:
     # 适配九键布局:
       # - xlit/qruafjzvb/123456789/
       # - xlit/qruafjzvb/1@#456789/  # 这里用@#代替23，保留数字23的选择功能，方便后续设置二选三选。
-      - xlit/qadgjmptx/1@#456789/
+      - xlit/qadgjmptx/123456789/

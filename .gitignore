@@ -12,9 +12,9 @@
 !/opencc
 /opencc/*
 !/opencc/emoji.txt
-
 !/cn_dicts_ray
 /cn_dicts_ray/*.dict*
+!/cn_dicts_ray/chars.dict.yaml
 !0--*
 !*ray*
 !default.custom.yaml

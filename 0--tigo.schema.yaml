@@ -13,8 +13,9 @@ schema:
   dependencies:
     - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
     - radical_pinyin  # 反查：部件拆字，反查及辅码
-    # - stroke          #反查：笔画组字
+    - stroke          #反查：笔画组字
     - charset         #字符集过滤器
+    - PY_c            #反查: 拼音
     - 0--tigress      #虎码简词
 
 __include: wanxiang.schema:/  # 继承万象的大部分方案配置
@@ -49,9 +50,9 @@ __patch:
   key_binder/bindings/@next/+: { when: has_menu, accept: slash, send: 3 }  # 增加斜杠三选
       # 列表项的起始数为0，所以这里@1表示列表中的第二个元素
 # 反查方案修改:
-  reverse_stroke/prefix/=: "=="  # 修改reverse_stroke的prefix(由``变为st)，防止与九键虎码的`冲突
-  recognizer/patterns/reverse_stroke/=: "^==[1@#45]*$"
-  radical_lookup/prefix/=: "==="  # 修改radical_lookup的prefix(由`变为rd)，防止与九键虎码的`冲突
+  reverse_stroke/prefix/=: "=="  # 修改reverse_stroke的prefix(由``变为==)，防止与九键虎码的`冲突
+  recognizer/patterns/reverse_stroke/=: "^==[hspnz]*$"
+  radical_lookup/prefix/=: "==="  # 修改radical_lookup的prefix(由`变为===)，防止与九键虎码的`冲突
   recognizer/patterns/radical_lookup/=: "^===[A-Za-z]*$"
   reverse_lookup:  # 同步虎码方案的PY_c反查
     dictionary: PY_c
@@ -64,7 +65,7 @@ __patch:
     comment_format:
       - "xform/^/ /"
     # suffix: "'"
-  engine/translators/@next/+:  #拼音反查
+  engine/translators/@next/+: reverse_lookup_translator #拼音反查
   recognizer/patterns/reverse_lookup/=: "^`[a-z]*'?$"
 
 # 增加拆分滤镜:
@@ -98,24 +99,26 @@ __patch:
     initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA;
     # delimiter: " '"  # 第一位<空格>是拼音之间的分隔符；第二位<'>表示可以手动输入单引号来分割拼音。
     algebra:
-    # 提取虎码的简码和全码（格式示例：u_unid）
+      # 提取虎码的简码和全码（格式示例：u_unid）
       - xform|^.*?;.*?;.*?;.*?;(.+?);(.+?);.*$|$1_$2| #这里将;换成了_,避免了后续操作对我所有自定义词典的影响
 
-    # 以下均须操作第二组【全码】：
-      - derive|^.+?_([a-z]{2}).*$|$1| # 纯双拼的情况（这里指所有的前两码）
-      - abbrev|^.+?_([a-z]{4})$|$1| # abbrev类型不可以整句内输入2位辅助码，必须加[
-      - derive|^.+?_([a-z]{4})$|$1[| # 输入4码加[出单字,增强单字性能
+      # 以下均须操作第二组【全码】, 且操作对象排除了简码为一码的字：
+      - derive|^..+?_([a-z]{2}).*$|$1| # 纯双拼的情况（这里指所有的前两码）
 
-    # 3码【简码】的字，【简码】后加[, 增强单字性能
+      # 4码【简码】的字(即没有简码), 四码后加[ , 增强单字性能
+      - abbrev|^....+?_([a-z]{4})$|$1| # abbrev类型不可以整句内输入2位辅助码，必须加[
+      - derive|^....+?_([a-z]{4})$|$1[| # 输入4码加[出单字,增强单字性能
+
+      # 3码【简码】的字，【简码】后加[, 增强单字性能
       - abbrev|^([a-z]{3})_.*$|$1|
       - derive|^([a-z]{3})_.*$|$1[|
 
-    # 2码【简码】的字，【简码】后加[ , 增强单字性能
+      # 2码【简码】的字，【简码】后加[ , 增强单字性能
       - derive|^([a-z]{2})_.*$|$1[|
 
-    # 1码【简码】的字，【简码】后加; , 增强单字性能
-      - derive|^([a-z])_.*$|$1|
+      # 1码【简码】的字，【简码】后加; , 增强单字性能
+      - derive|^([a-z])_.*$|$1|  # 这里使用derive, 不加;也可直出
       - derive|^([a-z])_.*$|$1;|
 
-    # 删除原始编码以加速检索
+      # 删除原始编码以加速检索
       - erase/^(.+)_(.+)$/

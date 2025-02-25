@@ -7,6 +7,7 @@
 # !/lua  # 如果某些文件已经被 Git 跟踪，即使它们在 .gitignore 文件中被排除，Git 仍然会跟踪它们。记得使用 git rm -r --cached opencc 移除这些文件。
 # !/opencc  
 !/scripts
+!/hamster_skins
 
 # 仅保留opencc目录下的emoji.txt
 !/opencc

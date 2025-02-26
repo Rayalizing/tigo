@@ -14,7 +14,7 @@ schema:
     - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
     - radical_pinyin  # 反查：部件拆字，反查及辅码
     - stroke          #反查：笔画组字
-    - charset         #字符集过滤器
+    - core2022        #字符集过滤器
     - PY_c            #反查: 拼音
     - 0--tigress      #虎码简词
 
@@ -26,17 +26,18 @@ __patch:
   user_dict_set/dictionary/=: 0--TigoMatrix  
   add_user_dict/dictionary/=: 0--TigoMatrix  # 自定义词典加词(ac引导)
 
-  # TM专属自定义短语
-  engine/translators/@next/+: table_translator@custom_phrase_TM
+# 新增TM专属自定义短语
+  engine/translators/@after 6/+: table_translator@custom_phrase_TM
   custom_phrase_TM:
     dictionary: ""
-    user_dict: custom_phrase_TM  # 包含了虎词和简词库,专为九键方案设计.需要手动创建 custom_phrase_TM.txt 文件
+    user_dict: custom_phrase/tigress_all_for_TM  # 包含了虎词和简词库,专为九键方案设计
     db_class: stabledb
     enable_completion: false # 补全提示
     enable_sentence: false   # 禁止造句
-    initial_quality: 9999999      # custom_phrase 的权重应该比 pinyin 和 melt_eng 大
+    initial_quality: 999     # custom_phrase 的权重应该比 pinyin 和 melt_eng 大
 
-  key_binder:  # 自定义快捷键 (修改自wanxiang和default)
+# 自定义全部快捷键 (修改自wanxiang和default)
+  key_binder:
     bindings:
       # Option/Alt + ←/→ 切换光标至下/上一个拼音
       - { when: composing, accept: Alt+Left, send: Shift+Left }

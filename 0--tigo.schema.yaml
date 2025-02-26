@@ -14,7 +14,7 @@ schema:
     - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
     - radical_pinyin  # 反查：部件拆字，反查及辅码
     - stroke          #反查：笔画组字
-    - charset         #字符集过滤器
+    - core2022        #字符集过滤器
     - PY_c            #反查: 拼音
     - 0--tigress      #虎码简词
 
@@ -27,19 +27,19 @@ __patch:
   user_dict_set/dictionary/=: 0--tigo  
   add_user_dict/dictionary/=: 0--tigo    # 自定义词典加词(ac引导)
   
-  # 虎词库导入并置顶, 实现前四码的首选为虎词（同时取消万象原方案中成语的拼音简码，一箭双雕）
+# 虎词库导入并置顶, 配合虎码混输模块，实现前四码的首选为虎词（同时取消万象原方案中成语的拼音简码，一箭双雕）
   chengyu:
     dictionary: 0--tigress     # 挂载词库 0--tigress.dict.yaml
     enable_sentence: false   # 禁止造句
-    enable_user_dict: false  # 禁用用户词典，是否开启自动调频
-    initial_quality: 9999999       # 初始权重（足够大，保证前四码的首选为虎词）
+    enable_user_dict: false  # 是否开启自动调频
+    initial_quality: 999       # 初始权重，大于所有其他挂接方案，保证前四码的首选为虎词
     comment_format:          # 自定义提示码
       - xform/.*//           # 清空提示码
 
 # 自定义开关(声调显示改为默认关闭)：
   switches/@6/=:
     name: tone_display
-    states: [ 调, 声 ]
+    states: [ 原码, 声调 ]
     reset: 0
 
 # 自定义超级注释：

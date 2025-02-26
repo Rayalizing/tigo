@@ -9,13 +9,22 @@
 !/scripts
 !/hamster_skins
 
-# 仅保留opencc目录下的emoji.txt
+# 仅保留opencc目录下的emoji.txt（已自定义）
 !/opencc
 /opencc/*
 !/opencc/emoji.txt
 
+# 保留lua目录下的自定义文件
+!/lua
+/lua/*
+!/lua/en_spacer.lua
+!/lua/remove_tiger_filter.lua
+
 # 保留预测文件（来自https://github.com/rime/librime-predict中的issues）
 !/predict.db
+
+# 保留custom_phrase目录下的所有文件
+!/custom_phrase
 
 !/cn_dicts_ray
 /cn_dicts_ray/*.dict*
@@ -26,9 +35,8 @@
 !PY_c.schema.yaml
 !wanxiang.custom.yaml
 !wanxiang.dict.yaml
-!custom_phrase.txt
-!custom_phrase_TM.txt
 
+!/tiger_sentence*
 # =============== 其他必须忽略的文件：=================
 # 我的个人配置
 *personal*

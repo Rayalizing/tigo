@@ -35,6 +35,7 @@ __patch:
     initial_quality: 999       # 初始权重，大于所有其他挂接方案，保证前四码的首选为虎词
     comment_format:          # 自定义提示码
       - xform/.*//           # 清空提示码
+  engine/filters/@2/=: lua_filter@*autocap_filter   # 将原来位置的assist_sort排序功能顶掉，防止与虎码的前四码输入习惯冲突
 
 # 自定义开关(声调显示改为默认关闭)：
   switches/@6/=:
@@ -74,24 +75,6 @@ __patch:
   engine/translators/@next/+: reverse_lookup_translator #拼音反查
   recognizer/patterns/reverse_lookup/=: "^`[a-z]*'?$"
 
-# 增加拆分滤镜:
-  chaifen:  # 拆分滤镜
-    opencc_config: hu_cf.json
-    option_name: chaifen
-    show_in_comment: true 
-    comment_format:     
-      - "xform/&nbsp;/ /"
-    tags:     
-      - abc
-      - tiger
-      - tigress
-      - reverse_lookup
-    tips: all  #只给单字加滤镜，改为 char 。 词也显示，改为 all
-  engine/filters/@next/+: simplifier@chaifen #拆分滤镜
-  switches/@next/+:
-    name: chaifen
-    reset: 0 
-    states: [ 拆, 分 ]
 # 增加自定义开关
   key_binder/bindings/@next/+: { accept: "Control+i", toggle: emoji, when: composing }  # PC emoji开关
   key_binder/bindings/@next/+: { when: composing, accept: '&', toggle: emoji_cn } # 手机 emoji开关

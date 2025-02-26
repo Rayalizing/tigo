@@ -22,8 +22,8 @@ patch:
   engine/filters/@after 10: lua_filter@*en_spacer
 
 # 增加虎码拆分和拼音滤镜
-  engine/filters/@after 10: simplifier@chaifen  #拆分滤镜
-  engine/filters/@after 10: simplifier@pinyin  #拼音滤镜
+  engine/filters/@after 11: simplifier@chaifen  #拆分滤镜
+  engine/filters/@after 12: simplifier@pinyin  #拼音滤镜
 
   chaifen:  # 拆分滤镜
     opencc_config: hu_cf.json
@@ -58,32 +58,33 @@ patch:
     - name: pinyin   #拼音滤镜（虎码配套）
       reset: 0
       states: [ 拼关, pīn ]
-    # 以下为虎码混输
-    - name: tiger-sentence
-      reset: 0
-      states: [关, 虎句]
-    - name: tigress
-      states: [ 关, 虎词 ]
-      reset: 1
-    - name: tiger
-      states: [ 关, 虎单 ]
-      reset: 0
-    - name: simple
-      states: [ 两码句, 原码句 ]
-    - name: sentence
-      states: [ 关, 置顶组句 ]
-      reset: 0
+    # # 以下为虎码混输
+    # - name: tiger-sentence
+    #   reset: 1
+    #   states: [关, 虎句]
+    # - name: tigress
+    #   states: [ 关, 虎词 ]
+    #   reset: 1
+    # - name: tiger
+    #   states: [ 关, 虎单 ]
+    #   reset: 1
+    # - name: simple
+    #   states: [ 两码句, 原码句 ]
+    # - name: sentence
+    #   states: [ 关, 置顶组句 ]
+    #   reset: 0
       
-  engine/translators/@next/+: lua_translator@translator_switch
-  engine/translators/@next/+: table_translator@tiger_sentence
+  # engine/translators/@next/+: lua_translator@translator_switch
+  # engine/translators/@next/+: table_translator@tiger_sentence
 
   engine/filters/@0/=: lua_filter@core2022  # 修改字集过滤为虎码官方版本(放在最上面完美解决简繁滤镜出错的问题)
   # engine/filters/@next/+: lua_filter@*remove_tiger_filter
-  engine/filters/@after 2: lua_filter@*remove_tiger_filter  # 虎码混输开关
-  recognizer/patterns/+: tiger_sentence: '^[A-Za-z]{5}[A-Za-z]*'
+  # engine/filters/@after 2: lua_filter@*remove_tiger_filter  # 虎码混输开关
+  # recognizer/patterns/+: 
+  #   tiger_sentence: '^[A-Za-z]{5}[A-Za-z]*'
   
-# 修改自定义词库为官方虎词库【注释掉该行将取消全拼的虎码混输功能】:
-  # custom_phrase/user_dict/=: custom_phrase/tigress_all  
+# 修改自定义词库为官方虎词库【注释掉该行将取消全拼方案的虎码混输功能】:
+  # custom_phrase/user_dict/=: custom_phrase/tigress_all
 
 # 修改自造词的前缀：
   recognizer/patterns/add_user_dict: "^ADD[A-Za-z/`']*$"  #自造词

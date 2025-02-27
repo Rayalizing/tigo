@@ -498,7 +498,8 @@ keyboardSwitchButton:
     - symbolButtonForegroundStyle
   backgroundAnimation: animation
   action: { keyboardType:  alphabetic }  # 这个在config中被替换成了拼音键盘
-  swipeUpAction: { shortcutCommand: "#方案切换" }
+  swipeUpAction: { shortcutCommand: "#RimeSwitcher" }
+  swipeDownAction: { shortcutCommand: "#方案切换" }
 
 shiftButton:
   size:
@@ -561,6 +562,8 @@ symbolButton:
     - symbolButtonForegroundStyle
   backgroundAnimation: animation
   action: { keyboardType: symbolic }
+  swipeUpAction: { shortcutCommand: "#RimeSwitcher" }
+  swipeDownAction: { shortcutCommand: "#方案切换" }
   
 symbolButtonBackgroundStyle:
   animation: alphabeticBackgroundAnimation
@@ -1079,7 +1082,7 @@ number5Button:
     - number5DownButtonForegroundStyle
   action: { character: 5 }
   swipeUpAction: { character: "k" }
-  swipeDownAction: { shortcutCommand: "#RimeSwitcher" }
+  swipeDownAction: tab
   swipeLeftAction: { character: "j" }
   swipeRightAction: { character: "l" }
 
@@ -1106,7 +1109,7 @@ number5UpButtonForegroundStyle:
   <<: *swipe_up_style
 
 number5DownButtonForegroundStyle:
-  text: "开关"
+  text: "⇥"
   <<: *swipe_down_style
 
 number8Button:

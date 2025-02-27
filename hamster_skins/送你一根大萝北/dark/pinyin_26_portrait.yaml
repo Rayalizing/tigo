@@ -2660,6 +2660,8 @@ symbolButton:
   foregroundStyle:
   - symbolButtonForegroundStyle
   action: {keyboardType: symbolic}
+  swipeUpAction: {shortcutCommand: "#RimeSwitcher"}
+  swipeDownAction: {shortcutCommand: "#方案切换"}
 symbolButtonBackgroundStyle:
   animation: alphabeticBackgroundAnimation
   normalImage:
@@ -2686,8 +2688,6 @@ symbolButtonForegroundStyle:
   backgroundStyle: 123ButtonBackgroundStyle
   foregroundStyle: 123ButtonForegroundStyle
   action: {keyboardType: numeric}
-  swipeUpAction: {shortcutCommand: "#RimeSwitcher"}
-  swipeDownAction: {shortcutCommand: "#方案切换"}
   holdSymbolsStyle: 123ButtonHoldSymbolsStyle
 123ButtonBackgroundStyle:
   animation: alphabeticBackgroundAnimation

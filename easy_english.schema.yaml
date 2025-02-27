@@ -77,11 +77,11 @@ translator:
 
 
 punctuator:
-  import_preset: default
+  import_preset: 0--core/rays_symbols
 
 # key_binder:
 menu:
   page_size: 5 #候选数量
 
 recognizer:
-  import_preset: 0--core/rays_symbols
+  import_preset: default

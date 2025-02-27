@@ -25,7 +25,7 @@ import_tables:
 
   # 我的自定义词库
   - 0--core/rays_kf
-  - 0--core/rays_personal
+  - 0--core/rays_personal/rays_personal
 
   # - tiger_pack/tigress_simp_ci  # 加入会影响整句输入体验
 ...

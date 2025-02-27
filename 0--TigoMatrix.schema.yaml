@@ -27,15 +27,16 @@ __patch:
   add_user_dict/dictionary/=: 0--TigoMatrix  # 自定义词典加词(ac引导)
 
 # 新增TM专属自定义短语
-  engine/translators/@after 6/+: table_translator@custom_phrase_TM
-  custom_phrase_TM:
-    dictionary: ""
-    user_dict: custom_phrase/tigress_all_for_TM  # 包含了虎词和简词库,专为九键方案设计
-    db_class: stabledb
-    enable_completion: false # 补全提示
-    enable_sentence: false   # 禁止造句
-    initial_quality: 999     # custom_phrase 的权重应该比 pinyin 和 melt_eng 大
-
+  custom_phrase/user_dict: 0--core/custom_phrase/tigress_all_for_TM
+  # engine/translators/@after 6/+: table_translator@custom_phrase_TM
+  # custom_phrase_TM:
+  #   dictionary: ""
+  #   user_dict: custom_phrase/tigress_all_for_TM  # 包含了虎词和简词库,专为九键方案设计
+  #   db_class: stabledb
+  #   enable_completion: false # 补全提示
+  #   enable_sentence: false   # 禁止造句
+  #   initial_quality: 9999     # custom_phrase 的权重应该比 pinyin 和 melt_eng 大
+  
 # 自定义全部快捷键 (修改自wanxiang和default)
   key_binder:
     bindings:

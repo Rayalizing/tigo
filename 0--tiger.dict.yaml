@@ -11,7 +11,7 @@ import_tables:
   - tiger_pack/tiger
   # 我的自定义词库:
   - 0--core/rays_kf  # 快符
-  - 0--core/rays_personal  # 个人词库
+  - 0--core/rays_personal/rays_personal  # 个人词库
 ...
 都	q	5001
 得	w	5001

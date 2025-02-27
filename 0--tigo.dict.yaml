@@ -26,16 +26,7 @@ import_tables:
 
   # 我的自定义词库
   - 0--core/rays_kf
-
-  # - 0--core/rays_personal_scaled_for_tigo
-  # - 0--core/rays_tigress_ci_scaled_for_tigo  
-  # 上面这部分改为用table_translator次翻译器，挂接0--tigress的词典, 所以不再加入.
-  # 好处: 
-  #   1. 位置稳定；稳定出现在前四码的首位.
-  #   2. 可以自动同步0--tigress的词典, 包括其中的personal部分
-  #   3. 无需另外指定personal字典.
-  # 坏处: 不能在整句中使用(无碍).
-  
+  - 0--core/rays_personal/rays_personal
   # - tiger_pack/tigress_simp_ci  # 加入会影响输入体验
 ...
 # 补充虎码所有字根字的三码版本：

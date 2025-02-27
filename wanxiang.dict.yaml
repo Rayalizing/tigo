@@ -26,5 +26,5 @@ import_tables:
 
   # 我的自定义词库:
   - 0--core/rays_kf  # 快符
-  - 0--core/rays_personal_for_wan  # 个人词库
+  - 0--core/rays_personal/rays_personal_for_wan  # 个人词库
 ...

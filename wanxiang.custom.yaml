@@ -84,7 +84,7 @@ patch:
   #   tiger_sentence: '^[A-Za-z]{5}[A-Za-z]*'
   
 # 修改自定义词库为官方虎词库【注释掉该行将取消全拼方案的虎码混输功能】:
-  # custom_phrase/user_dict/=: custom_phrase/tigress_all
+  # custom_phrase/user_dict/=: 0--core/custom_phrase/tigress_all
 
 # 修改自造词的前缀：
   recognizer/patterns/add_user_dict: "^ADD[A-Za-z/`']*$"  #自造词

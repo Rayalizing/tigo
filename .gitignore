@@ -38,6 +38,8 @@
 !wanxiang.dict.yaml
 
 !/tiger_sentence*
+!/weasel.custom.yaml
+!/squirrel.custom.yaml
 # =============== 其他必须忽略的文件：=================
 # 我的个人配置
 *personal*

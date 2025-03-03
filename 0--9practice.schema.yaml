@@ -1,0 +1,279 @@
+# Rime schema
+# encoding: utf-8
+#
+schema:
+  schema_id: 0--9practice
+  name: 九键练习
+  version: "2025-01-01"
+  author:
+    - amzxyz
+    - rayalizing
+  description: |
+    九键练习方案，用于练习基于行列码的九键输入法
+  dependencies:
+    - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
+    - radical_pinyin  # 反查：部件拆字，反查及辅码
+    - stroke          #反查：笔画组字
+    - core2022        #字符集过滤器
+    - PY_c            #反查: 拼音
+    - 0--tigress      #虎码简词
+
+__include: 0--tigo.schema:/  # 继承 tigo 的大部分方案配置
+
+######自定义区######
+__patch:
+  translator/dictionary/=: 0--9practice  # 挂载词库 0--9practice.dict.yaml
+  user_dict_set/dictionary/=: 0--9practice  
+  add_user_dict/dictionary/=: 0--9practice  # 自定义词典加词(ac引导)
+  
+
+# 自定义全部快捷键 (修改自wanxiang和default)
+  key_binder:
+    bindings:
+      # Option/Alt + ←/→ 切换光标至下/上一个拼音
+      - { when: composing, accept: Alt+Left, send: Shift+Left }
+      - { when: composing, accept: Alt+Right, send: Shift+Right }
+
+      # 翻页 - =
+      - { when: has_menu, accept: minus, send: Page_Up }
+      - { when: has_menu, accept: equal, send: Page_Down }
+
+      - { when: always, toggle: ascii_punct, accept: Control+Shift+3 }              # 切换中英标点
+      - { when: always, toggle: ascii_punct, accept: Control+Shift+numbersign }     # 切换中英标点
+      - { when: always, toggle: traditionalization, accept: Control+Shift+4 }       # 切换简繁
+      - { when: always, toggle: traditionalization, accept: Control+Shift+dollar }  # 切换简繁
+      - { when: composing, accept: Control+k, send: Shift+Delete }
+
+      #- { when: composing, accept: Tab, send: '[' } ## 取消注释后：tab引导辅助码
+      - { when: composing, accept: Control+w, send: Control+BackSpace }
+      # - { when: has_menu, accept: apostrophe, send: 2 }       #单引号用于次选
+      - { when: has_menu, accept: "Control+e", toggle: chinese_english }      #使用Control+e进入翻译模式
+      - { when: has_menu, accept: "Control+m", toggle: moqi_chaifen }      #使用快捷键Control+m/z分别开启和关闭墨奇或自然码辅助码拆分显示
+      - { when: has_menu, accept: "Control+z", toggle: zrm_chaifen }
+      - { when: has_menu, accept: "Control+a", toggle: fuzhu_switch }      #使用快捷键Control+a开启和关闭辅助码显示
+      - { when: has_menu, accept: "Control+s", toggle: tone_display }      #通过快捷键Control+s使得输入码显示音调
+      - { when: has_menu, accept: "Control+g", toggle: charset_filter }      #通过快捷键Control+g开启字符集过滤
+      - { when: has_menu, accept: "Tab", send: "Control+Right" }      # 使用 tab 在不同音节之间跳转
+      - { when: composing, accept: "Tab", send: "Control+Right" }
+      
+    #####################将小键盘 0~9 映射到主键盘，对应手机九宫格键盘的输入习惯。#####################
+      - {accept: KP_0, send: space, when: always}  # 这里的space似乎只有选择功能，不能输入“ ”空格！
+      # - {accept: KP_0, send: space, when: has_menu}
+      - {accept: KP_1, send: 7, when: always}           ## 小键盘布局图：
+      - {accept: KP_2, send: 8, when: always}    ##  Lock       /	      *		 ←      ##  Lock       /	      *		 ←
+      - {accept: KP_3, send: 9, when: always}    ##  1 qwe    @ rty   # uip         ##  1 qw     @ abc   # def
+      - {accept: KP_4, send: 4, when: always}    ##  4 asd    5 fgh   6 jkl	 `      ##  4 ghi    5 jkl   6 mno	 `
+      - {accept: KP_5, send: 5, when: always}    ##  7 zxc    8 vo    9 bnm	        ##  7 prs    8 tuv   9 xyz	
+      - {accept: KP_6, send: 6, when: always}    ##      Space		      '    ;      ##      Space		        '   ;
+      - {accept: KP_7, send: 1, when: always}    ##  说明：空格首选、分号输入符号、单引号分词；“/”表情输入（+lua）、反引号拼音反查。
+      # - {accept: KP_8, send: at, when: always}
+      # - {accept: KP_9, send: numbersign, when: always}
+      - {accept: KP_8, send: 2, when: always}
+      - {accept: KP_9, send: 3, when: always}
+      - {accept: KP_Decimal,  send: grave,     when: always}  # 将小键盘的小数点映射到主键盘的2键 (类似单引号2选)
+      - {accept: KP_Enter,    send: semicolon,      when: always}  # 将小键盘的Enter键映射到主键盘的分号
+      - {accept: KP_Divide,   send: slash,  when: always}  # 将小键盘的/键映射到主键盘的/键
+      - {accept: KP_Multiply, send: asterisk, when: always}  # 将小键盘的*键映射到主键盘的*号
+      - {accept: KP_Add,      send: apostrophe,      when: always}  # 将小键盘的+键映射到主键盘的`键
+      - {accept: KP_Subtract, send: BackSpace,  when: always}  # 将小键盘的-键映射到主键盘的退格
+    #####################/将小键盘 0~9 映射到主键盘，对应手机九宫格键盘的输入习惯。#####################
+
+# 拼写运算(本方案的核心)
+  speller:
+    alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA123456789;'*/
+    initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA123456789;
+    # delimiter: " '"  # 第一位<空格>是拼音之间的分隔符；第二位<'>表示可以手动输入单引号来分割拼音。
+    algebra:
+
+    ################### 复制自0--tigo方案 ####################
+      # 提取虎码的简码和全码（格式示例：u_unid）
+      - xform|^.*?;.*?;.*?;.*?;(.+?);(.+?);.*$|$1_$2| #这里将;换成了_,避免了后续操作对我所有自定义词典的影响
+
+      # 以下均须操作第二组【全码】, 且操作对象排除了简码为一码的字：
+      - derive|^..+?_([a-z]{2}).*$|$1| # 纯双拼的情况（这里指所有的前两码）
+
+      # 4码【简码】的字(即没有简码), 四码后加[ , 增强单字性能
+      - abbrev|^....+?_([a-z]{4})$|$1| # abbrev类型不可以整句内输入2位辅助码，必须加[
+      - derive|^....+?_([a-z]{4})$|$1[| # 输入4码加[出单字,增强单字性能
+
+      # 3码【简码】的字，【简码】后加[, 增强单字性能
+      - abbrev|^([a-z]{3})_.*$|$1|
+      - derive|^([a-z]{3})_.*$|$1[|
+
+      # 2码【简码】的字，【简码】后加[ , 增强单字性能
+      - derive|^([a-z]{2})_.*$|$1[|
+
+      # 1码【简码】的字，【简码】后加; , 增强单字性能
+      - derive|^([a-z])_.*$|$1|
+      - derive|^([a-z])_.*$|$1;|
+
+      # 删除原始编码以加速检索
+      - erase/^(.+)_(.+)$/
+    ################### \复制自0--tigo方案 ####################
+    # 上面运算后的结果: 一码字母 或一码字母+; 或两码字母 或两码字母+[ 或三码字母+[ 或四码字母+[
+
+    ################### 新增无重码九键方案 ####################
+      # - xlit/qwertyuiopasdfghjklzxcvbnm/QWERTYUIOPASDFGHJKLZXCVBNM/
+      - xlit/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
+      # - xform/Q/q1/
+      # - xform/W/q2/
+      # - xform/E/q3/
+      # - xform/R/r1/
+      # - xform/T/r2/
+      # - xform/Y/r3/
+      # - xform/U/u1/
+      # - xform/I/u2/
+      # - xform/P/u3/
+
+      # - xform/A/a1/
+      # - xform/S/a2/
+      # - xform/D/a3/
+      # - xform/F/f1/
+      # - xform/G/f2/
+      # - xform/H/f3/
+      # - xform/J/j1/
+      # - xform/K/j2/
+      # - xform/L/j3/
+
+      # - xform/Z/z1/
+      # - xform/X/z2/
+      # - xform/C/z3/
+      # - xform/V/v1/
+      # - xform/O/v2/
+      # - xform/B/b1/
+      # - xform/N/b2/
+      # - xform/M/b3/
+      - xform/Q/q1/
+      - xform/W/q2/
+      - xform/A/a1/
+      - xform/B/a2/
+      - xform/C/a3/
+      - xform/D/d1/
+      - xform/E/d2/
+      - xform/F/d3/
+
+      - xform/G/g1/
+      - xform/H/g2/
+      - xform/I/g3/
+      - xform/J/j1/
+      - xform/K/j2/
+      - xform/L/j3/
+      - xform/M/m1/
+      - xform/N/m2/
+      - xform/O/m3/
+
+      - xform/P/p1/
+      - xform/R/p2/
+      - xform/S/p3/
+      - xform/T/t1/
+      - xform/U/t2/
+      - xform/V/t3/
+      - xform/X/x1/
+      - xform/Y/x2/
+      - xform/Z/x3/
+
+      # 第三码，字母选择
+      ## 对原四码的处理：
+      # - xform/([a-z])([1-3])([a-z])([1-3])([a-z])([1-3])([a-z])([1-3])/$1$3$2$4$5$7$6$8/
+      - xform/([a-z])([1-3])([a-z])([1-3])([a-z])([1-3])([a-z])([1-3])\[/$1$3$2$4$5$7$6$8;/ # 输入6码加;出单字, 增强四码单字性能
+      # - xform/([a-z]+)11/$1q/
+      # - xform/([a-z]+)12/$1r/
+      # - xform/([a-z]+)13/$1u/
+      # - xform/([a-z]+)21/$1a/
+      # - xform/([a-z]+)22/$1f/
+      # - xform/([a-z]+)23/$1j/
+      # - xform/([a-z]+)31/$1z/
+      # - xform/([a-z]+)32/$1v/
+      # - xform/([a-z]+)33/$1b/  # 经过上述处理，原四码变为六码连续字母：([a-z])([a-z])([a-z])([a-z])([a-z])([a-z])
+      - xform/([a-z]+)11/$1q/
+      - xform/([a-z]+)12/$1a/
+      - xform/([a-z]+)13/$1d/
+      - xform/([a-z]+)21/$1g/
+      - xform/([a-z]+)22/$1j/
+      - xform/([a-z]+)23/$1m/
+      - xform/([a-z]+)31/$1p/
+      - xform/([a-z]+)32/$1t/
+      - xform/([a-z]+)33/$1x/  # 经过上述处理，原四码变为六码连续字母+分号：([a-z])([a-z])([a-z])([a-z])([a-z])([a-z]);
+
+      ## 对原三码的处理：
+      # - xform/([a-z])([1-3])([a-z])([1-3])([a-z])([1-3])/$1$3$2$4$5$6/
+      - xform/([a-z])([1-3])([a-z])([1-3])([a-z])([1-3])\[/$1$3$2$4$5$6/
+      # - xform/([a-z]+)11/$1q/
+      # - xform/([a-z]+)12/$1r/
+      # - xform/([a-z]+)13/$1u/
+      # - xform/([a-z]+)21/$1a/
+      # - xform/([a-z]+)22/$1f/
+      # - xform/([a-z]+)23/$1j/
+      # - xform/([a-z]+)31/$1z/
+      # - xform/([a-z]+)32/$1v/
+      # - xform/([a-z]+)33/$1b/  # 经过上述处理，原三码变为四码连续字母+一码数字：([a-z])([a-z])([a-z])([a-z])([1-3])
+      - xform/([a-z]+)11/$1q/
+      - xform/([a-z]+)12/$1a/
+      - xform/([a-z]+)13/$1d/
+      - xform/([a-z]+)21/$1g/
+      - xform/([a-z]+)22/$1j/
+      - xform/([a-z]+)23/$1m/
+      - xform/([a-z]+)31/$1p/
+      - xform/([a-z]+)32/$1t/
+      - xform/([a-z]+)33/$1x/  # 经过上述处理，原三码变为四码连续字母+一码数字：([a-z])([a-z])([a-z])([a-z])([1-3])
+      ### 处理([a-z])([a-z])([a-z])([a-z])([1-3])的后两位：
+      # - xform/([a-z][a-z][a-z][a-z])1;/$1\x2F/  # \x2F表示斜杠
+      # - xform/([a-z][a-z][a-z][a-z])2;/$1*/
+      # - xform/([a-z][a-z][a-z][a-z])3;/$1`/
+      - xform/([a-z][a-z][a-z][a-z])1/$1\x2F/
+      - xform/([a-z][a-z][a-z][a-z])2/$1*/
+      - xform/([a-z][a-z][a-z][a-z])3/$1'/  # 经过上述处理，原三码变为四码连续字母+一码符号：([a-z])([a-z])([a-z])([a-z])([*`\x2F])
+      
+      ## 对原二码的处理：
+      ### 对以'['结尾的二码的处理：
+      # - xform/([a-z])([1-3])([a-z])([1-3])/$1$3$2$4/
+      - xform/([a-z])([1-3])([a-z])([1-3])\[/$1$3$2$4;/
+      # - xform/([a-z]+)11/$1q/
+      # - xform/([a-z]+)12/$1r/
+      # - xform/([a-z]+)13/$1u/
+      # - xform/([a-z]+)21/$1a/
+      # - xform/([a-z]+)22/$1f/
+      # - xform/([a-z]+)23/$1j/
+      # - xform/([a-z]+)31/$1z/
+      # - xform/([a-z]+)32/$1v/
+      # - xform/([a-z]+)33/$1b/  # 经过上述处理，原二码变为三码连续字母。
+      - xform/([a-z]+)11/$1q/
+      - xform/([a-z]+)12/$1a/
+      - xform/([a-z]+)13/$1d/
+      - xform/([a-z]+)21/$1g/
+      - xform/([a-z]+)22/$1j/
+      - xform/([a-z]+)23/$1m/
+      - xform/([a-z]+)31/$1p/
+      - xform/([a-z]+)32/$1t/
+      - xform/([a-z]+)33/$1x/  # 经过上述处理，原二码变为三码连续字母+分号：([a-z])([a-z])([a-z]);
+      ### 对不以'['结尾的二码的处理：
+      - xform/([a-z])([1-3])([a-z])([1-3])/$1$3$2$4/
+      - xform/([a-z]+)11/$1q/
+      - xform/([a-z]+)12/$1a/
+      - xform/([a-z]+)13/$1d/
+      - xform/([a-z]+)21/$1g/
+      - xform/([a-z]+)22/$1j/
+      - xform/([a-z]+)23/$1m/
+      - xform/([a-z]+)31/$1p/
+      - xform/([a-z]+)32/$1t/
+      - xform/([a-z]+)33/$1x/  # 经过上述处理，原二码变为三码连续字母：([a-z])([a-z])([a-z])
+
+      ## 对原一码的处理：
+      # - xform/([a-z])1;/$1\x2F/
+      # - xform/([a-z])2;/$1*/
+      # - xform/([a-z])3;/$1`/
+      # - derive/([a-z])1;/$1\x2F/
+      # - derive/([a-z])2;/$1*/
+      # - derive/([a-z])3;/$1'/  # 经过上述处理，原一码变为一码字母+一码符号：([a-z])([*`\x2F])。（符号有分词作用，其后不用跟分隔符）
+      # 1码全码的字，双击符号直出:
+      - xform/([a-z])1;/$1\x2F\x2F/
+      - xform/([a-z])2;/$1**/
+      - xform/([a-z])3;/$1''/  # 经过上述处理，原一码派生出一码字母+两码重复符号：([a-z])([*`\x2F]{2})。（符号有分词作用，其后不用跟分隔符）
+      # 1码全码的字，1码直接出候选
+      - xform/([a-z])[1-3]/$1/
+    ################### /无重码九键方案 ####################
+
+    # 适配九键布局:
+      # - xlit/qruafjzvb/123456789/
+      # - xlit/qruafjzvb/1@#456789/  # 这里用@#代替23，保留数字23的选择功能，方便后续设置二选三选。
+      - xlit/qadgjmptx/123456789/

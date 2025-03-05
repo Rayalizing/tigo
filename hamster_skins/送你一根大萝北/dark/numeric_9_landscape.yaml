@@ -1090,15 +1090,18 @@ symbolbackspaceButtonForegroundStyle:
 
 dataSource:
   symbols:
+    - "/"
+    - "*"
+    - "'"
+    - ","
+    - "."
     - "="
     - "+"
-    - "*"
     - "-"
+    - "*"
     - "/"
     - "()"
-    - "."
     - "@"
-    - ","
     - "#"
     - ":"
     - "_"

@@ -60,7 +60,7 @@ preeditHeight: 22
 
 toolbarHeight: 40
 
-keyboardHeight: 270
+keyboardHeight: 216
 
 preedit:
   insets: { left: 8, top: 2 }
@@ -389,20 +389,23 @@ keyboard:
                     style: VStackStyle2
                     subviews:
                       - Cell: symbol斜Button
+                      - Cell: symbol星Button
+                      - Cell: symbol单引Button
+                - VStack:
+                    style: VStackStyle2
+                    subviews:
                       - Cell: number1Button
                       - Cell: number4Button
                       - Cell: number7Button
                 - VStack:
                     style: VStackStyle2
                     subviews:
-                      - Cell: symbol星Button
                       - Cell: number2Button
                       - Cell: number5Button
                       - Cell: number8Button
                 - VStack:
                     style: VStackStyle2
                     subviews:
-                      - Cell: symbol单引Button
                       - Cell: number3Button
                       - Cell: number6Button
                       - Cell: number9Button
@@ -445,18 +448,18 @@ VStackStyle1:
     width: 29/183
 VStackStyle2:
   size:
-    width: 1/3
+    width: 1/4
 VStackStyle3:
   size:
     width: 29/183
 
 HStackStyle1:
   size:
-    height: 4/5
+    height: 3/4
 
 HStackStyle2:
   size:
-    height: 1/5
+    height: 1/4
 
 
 collection:
@@ -954,7 +957,7 @@ number4ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG55
-  targetScale: 0.5
+  targetScale: 0.65
   <<: *button_fore_offset
   
 number4UpButtonForegroundStyle:
@@ -991,7 +994,7 @@ number7ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG58
-  targetScale: 0.65
+  targetScale: 0.82
   <<: *button_fore_offset
 
 number7UpButtonForegroundStyle:
@@ -1032,7 +1035,7 @@ number7DownButtonForegroundStyle:
   highlightImage:
     file: more2
     image: IMG9
-  targetScale: 0.6
+  targetScale: 0.75
 
 number2Button:
   backgroundStyle: numberButtonBackgroundStyle
@@ -1054,7 +1057,7 @@ number2ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG53
-  targetScale: 0.5
+  targetScale: 0.64
   <<: *button_fore_offset
 
 number2UpButtonForegroundStyle:
@@ -1092,7 +1095,7 @@ number5ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG56
-  targetScale: 0.5
+  targetScale: 0.65
   <<: *button_fore_offset
 
 number5UpButtonForegroundStyle:
@@ -1129,7 +1132,7 @@ number8ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG59
-  targetScale: 0.5
+  targetScale: 0.64
   <<: *button_fore_offset
 
 number8UpButtonForegroundStyle:
@@ -1167,7 +1170,7 @@ number3ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG54
-  targetScale: 0.5
+  targetScale: 0.65
   <<: *button_fore_offset
 
 number3UpButtonForegroundStyle:
@@ -1204,7 +1207,7 @@ number6ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG57
-  targetScale: 0.5
+  targetScale: 0.6
   <<: *button_fore_offset
 
 number6UpButtonForegroundStyle:
@@ -1242,7 +1245,7 @@ number9ButtonForegroundStyle:
   highlightImage:
     file: letter
     image: IMG60
-  targetScale: 0.65
+  targetScale: 0.82
   <<: *button_fore_offset
 
 number9UpButtonForegroundStyle:

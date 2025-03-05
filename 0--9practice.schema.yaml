@@ -23,9 +23,11 @@ __include: 0--tigo.schema:/  # 继承 tigo 的大部分方案配置
 ######自定义区######
 __patch:
   translator/dictionary/=: 0--9practice  # 挂载词库 0--9practice.dict.yaml
-  user_dict_set/dictionary/=: 0--9practice  
+  user_dict_set/dictionary/=: 0--9practice
   add_user_dict/dictionary/=: 0--9practice  # 自定义词典加词(ac引导)
-  
+
+  # 取消英文后加空格
+  engine/filters/@11: simplifier@chaifen # 用chaifen顶掉en_space
 
 # 自定义全部快捷键 (修改自wanxiang和default)
   key_binder:
@@ -70,11 +72,12 @@ __patch:
       # - {accept: KP_9, send: numbersign, when: always}
       - {accept: KP_8, send: 2, when: always}
       - {accept: KP_9, send: 3, when: always}
-      - {accept: KP_Decimal,  send: grave,     when: always}  # 将小键盘的小数点映射到主键盘的2键 (类似单引号2选)
-      - {accept: KP_Enter,    send: semicolon,      when: always}  # 将小键盘的Enter键映射到主键盘的分号
-      - {accept: KP_Divide,   send: slash,  when: always}  # 将小键盘的/键映射到主键盘的/键
-      - {accept: KP_Multiply, send: asterisk, when: always}  # 将小键盘的*键映射到主键盘的*号
-      - {accept: KP_Add,      send: apostrophe,      when: always}  # 将小键盘的+键映射到主键盘的`键
+      - {accept: 0, send: slash, when: has_menu}  # 将主键盘的0键（已事先在AHK上将numlock改为主键盘的0键：NumLock:: Send, 0）映射到主键盘的/键
+      - {accept: KP_Decimal,  send: grave,     when: always}  # 将小键盘的小数点映射到主键盘的`键
+      - {accept: KP_Enter,    send: Return,      when: always}  # 将小键盘的Enter键映射到主键盘的回车键
+      - {accept: KP_Divide,   send: asterisk,  when: always}  # 将小键盘的/键映射到主键盘的*键
+      - {accept: KP_Multiply, send: apostrophe, when: always}  # 将小键盘的*键映射到主键盘的'键
+      - {accept: KP_Add,      send: semicolon,      when: always}  # 将小键盘的+键映射到主键盘的;键
       - {accept: KP_Subtract, send: BackSpace,  when: always}  # 将小键盘的-键映射到主键盘的退格
     #####################/将小键盘 0~9 映射到主键盘，对应手机九宫格键盘的输入习惯。#####################
 

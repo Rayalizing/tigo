@@ -82,10 +82,10 @@ __patch:
       - {accept: KP_9, send: 3, when: always}
       - {accept: 0, send: slash, when: has_menu}  # 将主键盘的0键（已事先在AHK上将numlock改为主键盘的0键：NumLock:: Send, 0）映射到主键盘的/键
       - {accept: KP_Decimal,  send: grave,     when: always}  # 将小键盘的小数点映射到主键盘的`键
-      - {accept: KP_Enter,    send: Return,      when: always}  # 将小键盘的Enter键映射到主键盘的回车键
+      - {accept: KP_Enter,    send: semicolon, when: always}  # 将小键盘的Enter键映射到主键盘的;键
       - {accept: KP_Divide,   send: asterisk,  when: always}  # 将小键盘的/键映射到主键盘的*键
       - {accept: KP_Multiply, send: apostrophe, when: always}  # 将小键盘的*键映射到主键盘的'键
-      - {accept: KP_Add,      send: semicolon,      when: always}  # 将小键盘的+键映射到主键盘的;键
+      - {accept: KP_Add,      send: space,      when: always}  # 将小键盘的+键映射到主键盘的空格键
       - {accept: KP_Subtract, send: BackSpace,  when: always}  # 将小键盘的-键映射到主键盘的退格
     #####################/将小键盘 0~9 映射到主键盘，对应手机九宫格键盘的输入习惯。#####################
 

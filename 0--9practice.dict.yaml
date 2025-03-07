@@ -12,7 +12,21 @@ name: 0--9practice
 version: "2025.2.20"
 sort: by_weight
 use_preset_vocabulary: false
+import_tables:
+  # 我的自定义词库:
+  - 0--core/rays_kf  # 快符
+
 # 练习文本:
+# qwert
+# yuiop
+# asdfg
+# hjklz
+# xcvbnm
+# 都得也了我
+# 到的为是行
+# 来说中一就
+# 道人能而可
+# 和不要如在大
 # aaabacadaeafagahaiajakalam
 # anaoapaqarasatauavawaxayaz
 # babbbcbdbebfbgbhbibjbkblbm
@@ -66,32 +80,84 @@ use_preset_vocabulary: false
 # zazbzczdzezfzgzhzizjzkzlzm
 # znzozpzqzrzsztzuzvzwzxzyzz
 ...
-都	q	95000
-得	w	95000
-也	e	95000
-了	r	95000
-我	t	95000
-到	y	95000
-的	u	95000
-为	i	95000
-是	o	95000
-行	p	95000
-来	a	95000
-说	s	95000
-中	d	95000
-一	f	95000
-就	g	95000
-道	h	95000
-人	j	95000
-能	k	95000
-而	l	95000
-可	z	95000
-和	x	95000
-不	c	95000
-要	v	95000
-如	b	95000
-在	n	95000
-大	m	95000
+# 都	q
+# 得	w
+# 也	e
+# 了	r
+# 我	t
+# 到	y
+# 的	u
+# 为	i
+# 是	o
+# 行	p
+# 来	a
+# 说	s
+# 中	d
+# 一	f
+# 就	g
+# 道	h
+# 人	j
+# 能	k
+# 而	l
+# 可	z
+# 和	x
+# 不	c
+# 要	v
+# 如	b
+# 在	n
+# 大	m
+q	q	3
+w	w	1
+a	a	3
+b	b	2
+c	c	1
+d	d	3
+e	e	2
+f	f	1
+g	g	3
+h	h	2
+i	i	1
+j	j	3
+k	k	2
+l	l	1
+m	m	3
+n	n	2
+o	o	1
+p	p	3
+r	r	2
+s	s	1
+t	t	3
+u	u	2
+v	v	1
+x	x	3
+y	y	2
+z	z	1
+q	1/
+w	1*
+a	2/
+b	2*
+c	2'
+d	3/
+e	3*
+f	3'
+g	4/
+h	4*
+i	4'
+j	5/
+k	5*
+l	5'
+m	6/
+n	6*
+o	6'
+p	7/
+r	7*
+s	7'
+t	8/
+u	8*
+v	8'
+x	9/
+y	9*
+z	9'
 aa	aa
 ab	ab
 ac	ac
@@ -364,20 +430,20 @@ ki	ki
 kj	kj
 kk	kk
 kl	kl
-km km
-kn kn
-ko ko
-kp kp
-kq kq
-kr kr
-ks ks
-kt kt
-ku ku
-kv kv
-kw kw
-kx kx
-ky ky
-kz kz
+km	km
+kn	kn
+ko	ko
+kp	kp
+kq	kq
+kr	kr
+ks	ks
+kt	kt
+ku	ku
+kv	kv
+kw	kw
+kx	kx
+ky	ky
+kz	kz
 la	la
 lb	lb
 lc	lc
@@ -768,55 +834,3 @@ zw	zw
 zx	zx
 zy	zy
 zz	zz
-q	1
-w	1
-a	2
-b	2
-c	2
-d	3
-e	3
-f	3
-g	4
-h	4
-i	4
-j	5
-k	5
-l	5
-m	6
-n	6
-o	6
-p	7
-r	7
-s	7
-t	8
-u	8
-v	8
-x	9
-y	9
-z	9
-q 1/
-w 1*
-a	2/
-b	2*
-c	2'
-d	3/
-e	3*
-f	3'
-g	4/
-h	4*
-i	4'
-j	5/
-k	5*
-l	5'
-m	6/
-n	6*
-o	6'
-p	7/
-r	7*
-s	7'
-t	8/
-u	8*
-v	8'
-x	9/
-y	9*
-z	9'

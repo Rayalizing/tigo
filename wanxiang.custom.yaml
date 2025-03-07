@@ -129,6 +129,114 @@ patch:
     - xform/ń|ň|ǹ/en/ 
     - xform/ńg|ňg|ǹg/en/
 
+   # 增加模糊音和快捷输入
+
+    - abbrev/^([a-z]).+$/$1/   # 超级简拼
+    - abbrev/^([zcs]h).+$/$1/  # 超级简拼中，zh ch sh 视为整体（ch'sh → 城市），而不是像这样分开（c'h's'h → 吃好睡好）。
+
+    ### v u 转换
+    # 支持使用 qu/qv nue/nve 来输入 qu nve
+    - derive/^([nl])ve;/$1ue;/
+    - derive/^([jqxy])u/$1v/
+    # 以防引入的其他词库没按照正确方式注音，也做一个转换
+    - derive/^([nl])ue;/$1ve;/
+    - derive/^([jqxy])v/$1u/
+
+
+    # 自動糾正一些常見的按鍵錯誤
+    - derive/^([a-z]+?)([aeiou])ng(;.+)$/$1$2gn$3/        # dagn => dang
+    - derive/^([dtngkhrzcs])o(u|ng)(;.+)$/$1o$3/ # zho => zhong|zhou
+    - derive/^([a-z]+?)ong(;.+)$/$1on$2/  # zhonguo => zhong guo
+    - derive/^ding(;.+)$/din$1/       # din = ding
+    - derive/^([a-z]+?)([iu])a(o|ng?)(;.+)$/$1a$2$3$4/    # tain = tian; aio = iao; aing = iang; aung = uang
+    - derive/^tie(;.+)$/tei$1/    # tei = tie
+
+    ### 自动纠错(以下拼运取自白霜拼音: https://github.com/gaboolic/rime-frost/blob/master/rime_frost.schema.yaml)
+    ######## START 这几个有副作用的规则圈起来，方便取舍
+    # 这些规则对全拼简拼混输有副作用：如「x'ai 喜爱」被纠错为「xia 下」
+    # zh、ch、sh
+    - derive/^([zcs])h(a|e|i|u|ai|ei|an|en|ou|uo|ua|un|ui|uan|uai|uang|ang|eng|ong);/h$1$2;/  # hzi → zhi
+    - derive/^([zcs])h([aeiu]);/$1$2h;/  # zih → zhi
+    # # ia
+    # - derive/^([qjx])ia;/$1ai;/  # qai → qia
+    # # an
+    # - derive/^([wrtypsdfghklzcbnm])an;/$1na;/  # dna → dan
+    # # en
+    # - derive/^([wrpsdfghklzcbnm])en;/$1ne;/  # rne → ren
+    # # in
+    # - derive/^([qypjlxbnm])in;/$1ni;/  # qni → qin
+    # # un
+    # - derive/^([qrtysdghjklzxc])un;/$1nu;/  # qnu → qun
+    # # ian
+    # - derive/^([qtpdjlxbnm])ian;/$1ain;/
+    ######## END
+    # ai
+    - derive/^([wghk])ai;/$1ia;/  # wia → wai
+    # ei
+    - derive/^([wfghkz])ei;/$1ie;/  # wie → wei
+    # ie
+    - derive/^([jqx])ie;/$1ei;/  # jei → jie
+    # ao
+    - derive/^([rtypsdghklzcbnm])ao;/$1oa;/
+    # ou
+    - derive/^([ypfm])ou;/$1uo;/
+    # uo（无）
+    # ang
+    - derive/^([wrtypsdfghklzcbnm])ang;/$1nag;/
+    - derive/^([wrtypsdfghklzcbnm])ang;/$1agn;/
+    # eng
+    - derive/^([wrtpsdfghklzcbnm])eng;/$1neg;/
+    - derive/^([wrtpsdfghklzcbnm])eng;/$1egn;/
+    # ing
+    - derive/^([qtypdjlxbnm])ing;/$1nig;/
+    - derive/^([qtypdjlxbnm])ing;/$1ign;/
+    # ong
+    - derive/^([rtysdghklzcn])ong;/$1nog;/
+    - derive/^([rtysdghklzcn])ong;/$1ogn;/
+    # iao
+    - derive/^([qtpdjlxbnm])iao;/$1ioa;/
+    - derive/^([qtpdjlxbnm])iao;/$1oia;/
+    # ui
+    - derive/^([rtsghkzc])ui;/$1iu;/
+    # iu
+    - derive/^([qjlxnm])iu;/$1ui;/
+    # iang
+    - derive/^([qjlxn])iang;/$1aing;/
+    - derive/^([qjlxn])iang;/$1inag;/
+    # ua
+    - derive/^([g|k|h|zh|sh])ua;/$1au;/
+    # uai
+    - derive/^([g|h|k|zh|ch|sh])uai;/$1aui;/
+    # - derive/^([g|h|k|zh|ch|sh])uai;/$1uia;/ # 和「会啊、追啊」等常用词有冲突
+    # uan
+    - derive/^([qrtysdghjklzxcn])uan;/$1aun;/
+    # - derive/^([qrtysdghjklzxcn])uan;/$1una;/ # 和「去哪、露娜」等常用词有冲突
+    # ue
+    - derive/^([nlyjqx])ue;/$1eu;/
+    # uang
+    - derive/^([g|h|k|zh|ch|sh])uang;/$1aung;/
+    - derive/^([g|h|k|zh|ch|sh])uang;/$1uagn;/
+    - derive/^([g|h|k|zh|ch|sh])uang;/$1unag;/
+    - derive/^([g|h|k|zh|ch|sh])uang;/$1augn;/
+    # iong
+    - derive/^([jqx])iong;/$1inog;/
+    - derive/^([jqx])iong;/$1oing;/
+    - derive/^([jqx])iong;/$1iogn;/
+    - derive/^([jqx])iong;/$1oign;/
+    # 其他
+    - derive/^([rtsdghkzc])o(u|ng);/$1o;/ # do → dou|dong
+    - derive/^([a-z]+)ong;/$1on;/ # lon → long
+    - derive/^([tl])eng;/$1en;/ # ten → teng
+    - derive/^([qwrtypsdfghjklzxcbnm])([aeio])ng;/$1ng;/ # lng → lang、leng、ling、long
+
+    # 说明
+      # xform --改寫〔不保留原形〕
+      # derive --衍生〔保留原形〕
+      # abbrev --簡拼〔出字優先級較上兩組更低〕
+      # fuzz --畧拼〔此種簡拼僅組詞，不出單字〕
+      # xlit --變換〔適合大量一對一變換〕
+      # erase --刪除
+
    # 虎码首末辅码
     - xform|^(.*?);.*?;.*?;.*?;.*?;.*?;(.*?);.*$|$1;$2|
     - derive|^(.+);.*$|$1| # 纯双拼的情况

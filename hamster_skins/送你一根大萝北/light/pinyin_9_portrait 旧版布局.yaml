@@ -946,7 +946,7 @@ number4Button:
   swipeUpAction: { character: "h" }
   swipeLeftAction: { character: "g" }
   swipeRightAction: { character: "i" }
-  swipeDownAction: { character: "$" }
+  swipeDownAction: tab
 
 
 number4ButtonForegroundStyle:
@@ -971,7 +971,7 @@ number4UpButtonForegroundStyle:
   <<: *swipe_up_style
 
 number4DownButtonForegroundStyle:
-  text: "$"
+  text: "缩进"
   <<: *swipe_down_style
 
 number7Button:
@@ -984,7 +984,7 @@ number7Button:
   swipeUpAction: { character: "r" }
   swipeLeftAction: { character: "p" }
   swipeRightAction: { character: "s" }
-  swipeDownAction: { shortcutCommand: "#次选上屏" }
+  swipeDownAction: { shortcutCommand: "#粘贴" }
 
 number7ButtonForegroundStyle:
   animation: ButtonForegroundAnimation
@@ -1008,7 +1008,7 @@ number7UpButtonForegroundStyle:
   <<: *swipe_up_style
 
 number7DownButtonForegroundStyle:
-  text: "Ⅱ"
+  text: "粘贴"
   <<: *swipe_down_style
 
 123Button:
@@ -1082,7 +1082,7 @@ number5Button:
     - number5DownButtonForegroundStyle
   action: { character: 5 }
   swipeUpAction: { character: "k" }
-  swipeDownAction: tab
+  swipeDownAction: { character: "$" }
   swipeLeftAction: { character: "j" }
   swipeRightAction: { character: "l" }
 
@@ -1109,7 +1109,7 @@ number5UpButtonForegroundStyle:
   <<: *swipe_up_style
 
 number5DownButtonForegroundStyle:
-  text: "⇥"
+  text: "$"
   <<: *swipe_down_style
 
 number8Button:
@@ -1122,7 +1122,7 @@ number8Button:
   swipeUpAction: { character: "u" }
   swipeLeftAction: { character: "t" }
   swipeRightAction: { character: "v" }
-  swipeDownAction: { shortcutCommand: "#三选上屏" }
+  swipeDownAction: { shortcutCommand: "#次选上屏" }
 
 number8ButtonForegroundStyle:
   animation: ButtonForegroundAnimation
@@ -1146,7 +1146,7 @@ number8UpButtonForegroundStyle:
   <<: *swipe_up_style
 
 number8DownButtonForegroundStyle:
-  text: "Ⅲ"
+  text: "Ⅱ"
   <<: *swipe_down_style
 
 number3Button:
@@ -1232,7 +1232,7 @@ number9Button:
     - number9DownButtonForegroundStyle
   action: { character: 9 }
   swipeUpAction: { character: "y" }
-  swipeDownAction: { shortcutCommand: "#粘贴" }
+  swipeDownAction: { shortcutCommand: "#三选上屏" }
   swipeLeftAction: { character: "x" }
   swipeRightAction: { character: "z" }
   
@@ -1259,7 +1259,7 @@ number9UpButtonForegroundStyle:
   <<: *swipe_up_style
 
 number9DownButtonForegroundStyle:
-  text: "粘贴"
+  text: "Ⅲ"
   <<: *swipe_down_style
 
 spaceButton:

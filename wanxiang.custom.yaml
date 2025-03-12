@@ -116,8 +116,8 @@ patch:
     fuzhu_type: tiger             # 用于匹配对应的辅助码注释显示，基于默认词典的可选注释类型有：( moqi, flypy, zrm, jdh, cj, tiger, wubi, hanxin) tone (这个参数特殊，在注释里显示声调，不算辅助码，也填入此处)选择一个填入，之所以单独列出是因为这里有更多的可配置性，而真正的辅助码默认只有8种
     corrector_type: "{comment}"  # 换一种显示类型，比如"({comment})" 
 
-  key_binder/bindings/@1/=: { when: has_menu, accept: apostrophe, send: 2 }  # 修改分号二选为单引号二选
-  key_binder/bindings/@next/+: { when: has_menu, accept: slash, send: 3 }  # 增加斜杠三选
+  key_binder/bindings/@next/+: { when: has_menu, accept: apostrophe, send: 2 }  # 增加单引号二选
+  key_binder/bindings/@next/+: { when: has_menu, accept: bracketright, send: 3 }  # 增加 “]” 三选
 
   
 # 拼写运算 (决定本方案的拼音、辅助码输入方式)：
@@ -131,8 +131,8 @@ patch:
 
    # 增加模糊音和快捷输入
 
-    - abbrev/^([a-z]).+$/$1/   # 超级简拼
-    - abbrev/^([zcs]h).+$/$1/  # 超级简拼中，zh ch sh 视为整体（ch'sh → 城市），而不是像这样分开（c'h's'h → 吃好睡好）。
+    # - abbrev/^([a-z]).+$/$1/   # 超级简拼  (不再开启, 因为句子长了会拖慢算法响应速度)
+    # - abbrev/^([zcs]h).+$/$1/  # 超级简拼中，zh ch sh 视为整体（ch'sh → 城市），而不是像这样分开（c'h's'h → 吃好睡好）。
 
     ### v u 转换
     # 支持使用 qu/qv nue/nve 来输入 qu nve

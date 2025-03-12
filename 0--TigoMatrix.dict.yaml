@@ -13,16 +13,37 @@ version: "2025.2.20"
 sort: by_weight
 use_preset_vocabulary: false
 import_tables:
-  - cn_dicts_ray/chars            #字表，包含了所有带拼音的汉字
-  - cn_dicts_ray/base            #基础词库，2-3字词汇
-  - cn_dicts_ray/correlation     #关联词库，4字词汇，多为不同词频的2字语句连接起来起到合理组句的能力
-  - cn_dicts_ray/associational   #联想词库，5字以上词汇，多用于输入前半段第二候选可以出来整段
-  - cn_dicts_ray/corrections     #错音错字，支持错音和错字输入的兼容，同时供超级注释lua使用会在输入错误音节打出的时候给予提示
-  - cn_dicts_ray/compatible      #兼容词库，是基础词库的扩充，收录了多场景多种读音的词组
-  - cn_dicts_ray/poetry          #诗词
-#  - cn_dicts_ray/people         #人名
-#  - cn_dicts_ray/place          #地名
+  - frost/cn_dicts_ray/8105     # 字表                    9k
+  - frost/cn_dicts_ray/41448  # 大字表（按需启用）         38k
+  - frost/cn_dicts_ray/base     # 基础词库                376k
+  - frost/cn_dicts_ray/ext      # 扩展词库                236k
+  # - frost/cn_dicts_ray/tencent  # 腾讯词向量（大词库，部署时间较长）  897k
+  - frost/cn_dicts_ray/others   # 一些杂项                0.6k
 
+  # 细胞词库
+  - frost/cn_dicts_ray_cell/industry_product  # 行业产品   3k
+  - frost/cn_dicts_ray_cell/exthot      #  ext 网络热词    2k
+  - frost/cn_dicts_ray_cell/animal      # 动物             0.6k
+  - frost/cn_dicts_ray_cell/idiom       # 成语（俗语）      49k
+  - frost/cn_dicts_ray_cell/media       # 自媒体            0
+  - frost/cn_dicts_ray_cell/shulihua    # 数理化            37k
+  - frost/cn_dicts_ray_cell/inputmethod # 输入法相关        0.1k
+  - frost/cn_dicts_ray_cell/place       # 地名 地铁         3k
+  - frost/cn_dicts_ray_cell/geography   # 地理 地质         3k
+  - frost/cn_dicts_ray_cell/literature  # 语文 文学 生僻词汇 35k
+  - frost/cn_dicts_ray_cell/music       # 音乐相关          0
+  - frost/cn_dicts_ray_cell/computer    # 计算机 互联网相关  0
+  - frost/cn_dicts_ray_cell/composite   # 复合词 合成词      43k
+  - frost/cn_dicts_ray_cell/name        # 名字              0.3k
+  # - frost/cn_dicts_ray_cell/food        # 食物 菜名         144k
+  # - frost/cn_dicts_ray_cell/medication  # 医药相关       129k
+  # - frost/cn_dicts_ray_cell/game        # 炉石 王者 dota LOL 魔兽 传奇 dnf 狼人杀 三国杀 原神 CF 剑灵等  151k
+  # - frost/cn_dicts_ray_cell/sport       # 运动：各种球类运动术语、明星  13k
+  # - frost/cn_dicts_ray_cell/history     # 历史人名        20k
+  # - frost/cn_dicts_ray_cell/name2       # 动漫人名等       18k
+  # - frost/cn_dicts_ray_cell/chess       # 象棋           0.1k
+  # - frost/cn_dicts_ray_cell/chess2      # 象棋棋谱等      3k
+  
   # 我的自定义词库
   - 0--core/rays_kf
   - 0--core/rays_personal/rays_personal

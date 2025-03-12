@@ -3,13 +3,13 @@
 #
 schema:
   schema_id: 0--TigoMatrix
-  name: TigoMatrix·万象
+  name: TigoMatrix·万象白霜
   version: "2025-01-01"
   author:
     - amzxyz
     - rayalizing
   description: |
-    九键虎码整句(虎阵)，基于万象词库的方案
+    九键虎码整句(虎阵), 基于万象方案, 白霜词库
   dependencies:
     - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
     - radical_pinyin  # 反查：部件拆字，反查及辅码

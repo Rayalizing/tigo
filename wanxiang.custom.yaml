@@ -2,16 +2,8 @@
 # encoding: utf-8
 
 patch:
-# 方案说明
-  schema:
-    schema_id: wanxiang
-    name: 全拼虎·万象
-    version: "2025-01-01"
-    author:
-      - amzxyz
-    description: |
-      万象拼音 支持常见双拼方案和全拼输入，辅助码同时支持墨奇;鹤形;自然码;简单鹤;仓颉首末;虎码首末;五笔前2;汉心码；采用万象归一的词库，换方案不换词库，不丢失用户词！
-    dependencies:
+# 方案: 万象·全拼虎辅
+  schema/dependencies:
       - melt_eng        # 英文输入，作为次翻译器挂载到拼音方案
       - radical_pinyin  # 反查：部件拆字，反查及辅码
       - stroke          #反查：笔画组字
@@ -22,9 +14,15 @@ patch:
   engine/filters/@after 10: lua_filter@*en_spacer
 
 # 增加虎码拆分和拼音滤镜
+  switches/+:
+    - name: chaifen  # 虎码配套拆分
+      reset: 0
+      states: [ 拆隐, 拆显 ]
+    - name: pinyin   #拼音滤镜（虎码配套）
+      reset: 0
+      states: [ 拼关, pīn ]
   engine/filters/@after 11: simplifier@chaifen  #拆分滤镜
   engine/filters/@after 12: simplifier@pinyin  #拼音滤镜
-
   chaifen:  # 拆分滤镜
     opencc_config: hu_cf.json
     option_name: chaifen
@@ -36,7 +34,6 @@ patch:
       - tiger
       - reverse_lookup
     tips: all #如只想给单字加滤镜，可改为 char
-
   pinyin:  # ↓拼音滤镜
     opencc_config: pinyin.json
     option_name: pinyin
@@ -50,39 +47,6 @@ patch:
       - tiger
       # - reverse_lookup
 
-# 增加虎码混输模块
-  switches/+:
-    - name: chaifen  # 虎码配套拆分
-      reset: 0
-      states: [ 拆隐, 拆显 ]
-    - name: pinyin   #拼音滤镜（虎码配套）
-      reset: 0
-      states: [ 拼关, pīn ]
-    # # 以下为虎码混输
-    # - name: tiger-sentence
-    #   reset: 1
-    #   states: [关, 虎句]
-    # - name: tigress
-    #   states: [ 关, 虎词 ]
-    #   reset: 1
-    # - name: tiger
-    #   states: [ 关, 虎单 ]
-    #   reset: 1
-    # - name: simple
-    #   states: [ 两码句, 原码句 ]
-    # - name: sentence
-    #   states: [ 关, 置顶组句 ]
-    #   reset: 0
-      
-  # engine/translators/@next/+: lua_translator@translator_switch
-  # engine/translators/@next/+: table_translator@tiger_sentence
-
-  engine/filters/@0/=: lua_filter@core2022  # 修改字集过滤为虎码官方版本(放在最上面完美解决简繁滤镜出错的问题)
-  # engine/filters/@next/+: lua_filter@*remove_tiger_filter
-  # engine/filters/@after 2: lua_filter@*remove_tiger_filter  # 虎码混输开关
-  # recognizer/patterns/+: 
-  #   tiger_sentence: '^[A-Za-z]{5}[A-Za-z]*'
-  
 # 修改自定义词库为官方虎词库【注释掉该行将取消全拼方案的虎码混输功能】:
   # custom_phrase/user_dict/=: 0--core/custom_phrase/tigress_all
 
@@ -90,44 +54,25 @@ patch:
   recognizer/patterns/add_user_dict: "^ADD[A-Za-z/`']*$"  #自造词
   add_user_dict/prefix: "ADD"
 
-# 增加预测模块（https://github.com/rime/librime-predict）
-  engine/processors/@before 0: predictor
-  engine/translators/@before 0: predict_translator
-  switches/@next/+:
-    name: prediction
-    states: [ 预测关, 预测开 ]
-    reset: 0
-  predictor:
-    db: predict.db
-    max_iterations: 0  # 迭代次数，0为无限次
-    max_candidates: 7  # 候选词个数（建议和menu/page_size的数量一致）
-
-# 候选词个数
-  menu/page_size: 7
-
-# translator/dictionary/=: wanxiang.extended    # 挂载词库 wanxiang.extended.dict.yaml
   punctuator:
     digit_separators: ":,."  #数字分隔符
     __include: 0--core/rays_symbols:/punctuator    # 挂载我的符号文件
 
-# 超级注释模块，子项配置 true 开启，false 关闭
-  pro_comment_format:
-    candidate_length: 1         # 候选词辅助码提醒的生效长度，0为关闭  但同时清空其它，应当使用上面开关来处理    
-    fuzhu_type: tiger             # 用于匹配对应的辅助码注释显示，基于默认词典的可选注释类型有：( moqi, flypy, zrm, jdh, cj, tiger, wubi, hanxin) tone (这个参数特殊，在注释里显示声调，不算辅助码，也填入此处)选择一个填入，之所以单独列出是因为这里有更多的可配置性，而真正的辅助码默认只有8种
-    corrector_type: "{comment}"  # 换一种显示类型，比如"({comment})" 
+# 超级注释模块：
+  super_comment/fuzhu_type: tiger   # 用于匹配对应的辅助码注释显示，基于默认词典的可选注释类型有：( moqi, flypy, zrm, jdh, cj, tiger, wubi, hanxin) tone (这个参数特殊，在注释里显示声调，不算辅助码，也填入此处)选择一个填入，之所以单独列出是因为这里有更多的可配置性，而真正的辅助码默认只有8种
 
+# 快捷键：
   key_binder/bindings/@next/+: { when: has_menu, accept: apostrophe, send: 2 }  # 增加单引号二选
   key_binder/bindings/@next/+: { when: has_menu, accept: bracketright, send: 3 }  # 增加 “]” 三选
 
-  
 # 拼写运算 (决定本方案的拼音、辅助码输入方式)：
-  speller/alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA`[;
+  speller/alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA`[;/
   speller/initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA;
   speller/algebra:
    # 全拼输入
     - xlit/āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜü/aaaaooooeeeeiiiiuuuuvvvvv/
-    - xform/ń|ň|ǹ/en/ 
     - xform/ńg|ňg|ǹg/en/
+    - xform/ń|ň|ǹ/en/
 
    # 增加模糊音和快捷输入
 
@@ -141,7 +86,6 @@ patch:
     # 以防引入的其他词库没按照正确方式注音，也做一个转换
     - derive/^([nl])ue;/$1ve;/
     - derive/^([jqxy])v/$1u/
-
 
     # 自動糾正一些常見的按鍵錯誤
     - derive/^([a-z]+?)([aeiou])ng(;.+)$/$1$2gn$3/        # dagn => dang
@@ -241,14 +185,15 @@ patch:
     - xform|^(.*?);.*?;.*?;.*?;.*?;.*?;(.*?);.*$|$1;$2|
     - derive|^(.+);.*$|$1| # 纯双拼的情况
     - abbrev|^(.+);(\w)(\w).*$|$1$2| # 双拼+一位辅助码的情况
-    # - derive|^(.+);(\w)(\w).*$|$1[$2| # 双拼+[一位辅助码的情况
+    - derive|^(.+);(\w)(\w).*$|$1$2[| # 双拼+[一位辅助码的情况
     - abbrev|^(.+);(\w)(\w).*$|$1$2$3| # 双拼+2位辅助码的情况
-    - derive|^(.+);(\w)(\w).*$|$1$2$3[| # 双拼+2位辅助码+[
-    # - derive|^(.+);(\w)(\w).*$|$1$2$3o| # 双拼+2位辅助码+o
-    #分号后面的第二组辅助码
+    - derive|^(.+);(\w)(\w).*$|$1$2$3/| # 双拼+2位辅助码+/
+    # - derive|^(.+);(\w)(\w).*$|$1$2$3o| # 双拼\+2位辅助码\+o，主要用来应对小企鹅这类输入法没法使用符号的场景，但同时有些辅助码会出现异常，如：ui uio>uiuio
+#分号后面第二组辅助码
     - abbrev/^(.+);.*?,(\w)(\w).*$/$1$2/
-    # - derive/^(.+);.*?,(\w)(\w).*$/$1[$2/
+    - derive/^(.+);.*?,(\w)(\w).*$/$1$2[/
     - abbrev/^(.+);.*?,(\w)(\w).*$/$1$2$3/
-    - derive|^(.+);.*?,(\w)(\w).*$|$1$2$3[|
+    - derive|^(.+);.*?,(\w)(\w).*$|$1$2$3/|
     # - derive/^(.+);.*?,(\w)(\w).*$/$1$2$3o/
+    # - xform/◯/;/  #对于微软双拼、搜狗双拼，前面将分号保护了起来，现在放出来让其发挥作用
     - erase/^(.+);(.+)$/    # 删除原始编码加速检索

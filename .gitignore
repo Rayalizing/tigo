@@ -20,8 +20,8 @@
 !/lua/en_spacer.lua
 !/lua/remove_tiger_filter.lua
 
-# 保留预测文件（来自https://github.com/rime/librime-predict中的issues）
-!/predict.db
+# # 保留预测文件（来自https://github.com/rime/librime-predict中的issues）
+# !/predict.db
 
 # 保留custom_phrase目录下的所有文件
 !/custom_phrase
